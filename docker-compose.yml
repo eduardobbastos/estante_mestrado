@@ -1,0 +1,23 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    volumes:
+      # Mapeia o código local para o contêiner para hot-reload
+      # Qualquer alteração no seu código local será refletida no contêiner
+      - ./backend:/app
+      # Evita que a pasta node_modules local sobrescreva a do contêiner
+      - /app/node_modules
+    # Usa o nodemon para reiniciar o servidor automaticamente em caso de alterações no código.
+    command: npm run dev
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:80"
+    volumes:
+      # Mapeia os arquivos do frontend para o contêiner para atualização em tempo real.
+      - ./frontend:/usr/share/nginx/html:z
+    depends_on:
+      - backend

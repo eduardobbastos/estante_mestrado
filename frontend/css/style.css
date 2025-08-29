@@ -1,0 +1,195 @@
+:root {
+nte    --background-color: #f4f4f4;
+    --content-bg: #ffffff;
+    --text-color: #2c2f7b; /* Azul Institucional */
+    --text-color-light: #ffffff;
+    --text-color-secondary: #555;
+    --primary-color: #2c2f7b;
+    --accent-color: #fdb913; /* Dourado Institucional */
+    --border-color: #e5e5e5;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 8px 25px rgba(44, 47, 123, 0.15);
+}
+
+body {
+    background-color: var(--background-color);
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-color-secondary);
+}
+
+.app-wrapper {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 2rem 3rem;
+}
+
+header h1 {
+    color: var(--primary-color);
+    font-weight: 900;
+}
+
+.section-title {
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+#curso-info-container .card {
+    background: var(--content-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+}
+#curso-info-container .card-header h3 {
+    font-weight: 700;
+    color: var(--primary-color);
+}
+#curso-info-container .card-body p {
+    margin-bottom: 0.5rem;
+}
+#curso-info-container .card-body strong {
+    color: var(--primary-color);
+}
+
+.app-wrapper hr {
+    border-top: 1px solid var(--border-color);
+    opacity: 0.5;
+}
+
+.prateleira {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    margin-bottom: 4rem;
+}
+
+.prateleira-titulo {
+    color: var(--primary-color);
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.aulas-container {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 1rem 5px;
+    gap: 20px;
+    perspective: 1000px; /* Ativa o ambiente 3D para os cards filhos */
+}
+
+.aulas-container::-webkit-scrollbar {
+    height: 8px;
+}
+.aulas-container::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 4px;
+}
+.aulas-container::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.aula-card {
+    flex-shrink: 0;
+    width: 280px;
+    height: 180px;
+    background-color: var(--content-bg);
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    transform-style: preserve-3d; /* Permite transformações 3D nos filhos */
+    transition: transform 0.1s linear, box-shadow 0.3s ease;
+}
+
+.aula-card:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+/* Conteúdo visível do card, que também inclina */
+.card-content-wrapper {
+    transform: translateZ(20px); /* Eleva o conteúdo para dar profundidade */
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.card-date {
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.card-main-icon {
+    font-size: 4rem;
+    opacity: 0.8;
+}
+
+/* Overlay de detalhes que aparece no hover */
+.card-details {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to top, rgba(44, 47, 123, 0.98) 0%, rgba(44, 47, 123, 0.8) 100%);
+    padding: 15px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: var(--text-color-light);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transform: translateZ(50px); /* Eleva ainda mais os detalhes */
+}
+
+.aula-card:hover .card-details {
+    opacity: 1;
+}
+
+.conteudo-item {
+    padding: 4px 0;
+    font-size: 0.9rem;
+}
+
+.conteudo-item a {
+    text-decoration: none;
+    color: var(--text-color-light);
+    font-weight: 500;
+}
+
+.conteudo-item a:hover {
+    color: var(--accent-color);
+}
+
+#footer-container {
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--border-color);
+}
+
+#footer-container h3 {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+#footer-container .list-group-item {
+    background-color: transparent;
+    border-color: var(--border-color);
+    color: var(--text-color-secondary);
+}
+
+#back-to-top-btn {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+}
+
+#back-to-top-btn:hover {
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+}
+
+.badge-custom {
+    background-color: var(--accent-color) !important;
+    color: var(--primary-color) !important;
+    font-weight: 700;
+}
