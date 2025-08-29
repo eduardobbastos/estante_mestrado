@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // O ID da disciplina que definimos no data.json
-    const disciplinaId = "pensamento-social-brasileiro";
-    carregarDisciplina(disciplinaId);
+    // Agora carregamos os dados do arquivo estático local
+    carregarDisciplina();
 });
 
-async function carregarDisciplina(id) {
-    const apiUrl = `http://localhost:3000/api/disciplina/${encodeURIComponent(id)}`;
+async function carregarDisciplina() {
+    // O caminho para o nosso novo arquivo de dados estático
+    const dataUrl = './data/disciplina.json';
     try {
-        const response = await fetch(apiUrl);
+        const response = await fetch(dataUrl);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -24,9 +24,12 @@ async function carregarDisciplina(id) {
 
 function renderPagina(data) {
     if (!data) return;
-    renderCursoInfo(data.cursoInfo);
-    renderCronograma(data.cronograma);
-    renderAvaliacao(data.avaliacao); // Adiciona a chamada para renderizar a avaliação
+    // Como o arquivo agora contém a estrutura completa, acessamos a disciplina por sua chave
+    const disciplinaId = "pensamento-social-brasileiro";
+    const disciplinaData = data[disciplinaId];
+    renderCursoInfo(disciplinaData.cursoInfo);
+    renderCronograma(disciplinaData.cronograma);
+    renderAvaliacao(disciplinaData.avaliacao);
 }
 
 function renderCursoInfo(info) {

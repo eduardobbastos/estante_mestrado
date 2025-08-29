@@ -1,0 +1,214 @@
+{
+  "pensamento-social-brasileiro": {
+    "cursoInfo": {
+      "instituicao": "UNIGRANRIO Afya",
+      "programa": "Programa de Pós-Graduação em Humanidades, Culturas e Artes - PPGHCA",
+      "disciplina": "Pensamento Social Brasileiro no Campo Interdisciplinar",
+      "professoras": [
+        "Anna Paula Lemos",
+        "Tamara Campos"
+      ],
+      "horario": {
+        "dia": "quarta-feira",
+        "hora": "13h10 às 15h40"
+      },
+      "contato": [
+        "anna.lemos@unigranrio.edu.br",
+        "tamara.souzacampos@unigranrio.com.br"
+      ]
+    },
+    "cronograma": [
+      {
+        "mes": "Agosto",
+        "aulas": [
+          {
+            "data": "27/08",
+            "conteudo": "Apresentação do curso"
+          }
+        ]
+      },
+      {
+        "mes": "Setembro",
+        "aulas": [
+          {
+            "data": "03/09",
+            "conteudo": [
+              {
+                "titulo": "Hino Nacional - Carlos Drummond de Andrade e o pensamento brasileiro no campo interdisciplinar.",
+                "link": "https://drive.google.com/file/d/1DNd7tpUIHZal6S-tjKuca_KwHGY5k0as/view?usp=drive_link"
+              },
+              {
+                "titulo": "Introdução de Nenhum Brasil existe, de João Cesar de Castro Rocha.",
+                "link": "https://drive.google.com/file/d/1zD3kc29aH_XwoBySd5p3RlHcaxkij-EX/view"
+              }
+            ]
+          },
+          {
+            "data": "10/09",
+            "conteudo": "SEMANA DE ACOLHIMENTO. Presença Obrigatória"
+          },
+          {
+            "data": "17/09",
+            "conteudo": [
+              {
+                "titulo": "\"Instinto de nacionalidade\" - Machado de Assis",
+                "link": "https://drive.google.com/file/d/1wz0xcmq-L8MT4ucRnGVLRooa6c7lZR08/view?usp=drive_link"
+              }
+            ]
+          },
+          {
+            "data": "24/09",
+            "conteudo": [
+              {
+                "titulo": "\"Dialética da malandragem\" - Antonio Cândido",
+                "link": "https://revistas.usp.br/rieb/article/view/69638"
+              },
+              {
+                "titulo": "Complementar: Carnavais, malandros e heróis",
+                "observacao": "Ler A casa e a rua e A casa e a rua: dialética, simbolização e ritualização. p.90-101.",
+                "link": "https://www.leme.uerj.br/wp-content/uploads/2010/10/28211389-roberto-damatta-carnavais-malandros-e-herois.pdf"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "mes": "Outubro",
+        "aulas": [
+          {
+            "data": "01/10",
+            "conteudo": [
+              {
+                "titulo": "Dialética da Marginalidade",
+                "link": "https://drive.google.com/file/d/1Af60lFjXwqB-C2h6tg_rCXHrsYuSL27l/view"
+              }
+            ]
+          },
+          {
+            "data": "08/10",
+            "conteudo": [
+              {
+                "titulo": "Casa Grande e Senzala - 1, 2, 3 e 4: indígena, o português e o negro",
+                "observacao": "Alunos precisam ler o capítulo 1. Professoras discutem o livro todo.",
+                "link": "https://drive.google.com/file/d/1lFiWRGJPgjEvKVnYzafgdyfc6lqFBiYt/view?usp=sharing"
+              },
+              {
+                "titulo": "Filme: Quanto vale ou é por quilo (assistir em casa)"
+              },
+              {
+                "titulo": "Texto complementar: Ricardo Benzaquen. Raios e Trovões. Plasticidade, excessão e modernidade na obra dr Gilberto Freyre.",
+                "link": "https://drive.google.com/file/d/1D6He-gUjU94vZxSBIfaULUxvJ8KSHEv8/view?usp=sharing"
+              }
+            ]
+          },
+          {
+            "data": "15/10",
+            "conteudo": [
+              {
+                "titulo": "Texto: O homem Cordial - Sergio Buarque de Holanda",
+                "link": "https://drive.google.com/file/d/1FnswRhwm6CtuPAngBWfHVtZqQMQX02K-/view?usp=sharing"
+              },
+              {
+                "titulo": "Video: Lilia Schwarcz sobre Raizes do Brasil",
+                "link": "https://www.youtube.com/watch?v=vlbWzC6l6wk"
+              }
+            ]
+          },
+          {
+            "data": "22/10",
+            "seminario": "Marcia",
+            "conteudo": [
+              {
+                "titulo": "A entrada das teorias raciais no Brasil por Lilia Schwarcz",
+                "link": "https://www.youtube.com/watch?v=93f7nkbD7tY"
+              },
+              {
+                "titulo": "Texto: O Pacto da Branquitude, Cida Bento.",
+                "observacao": "Introdução, capítulo 1 para leitura",
+                "link": "https://drive.google.com/file/d/1kL0NfRJZYWgIhfhCxYCN2PP8icl-gUId/view?usp=drive_link"
+              },
+              {
+                "titulo": "Cida Bento explica o que é o \"pacto da branquitude\" e como ele sustenta desigualdades",
+                "observacao": "Roda Viva",
+                "link": "https://www.youtube.com/watch?v=zc51sZOlrQw&t=6s"
+              }
+            ]
+          },
+          {
+            "data": "29/10",
+            "conteudo": "NÃO HAVERÁ AULA - PROFESSORAS EM CONGRESSO (CONINTER)"
+          }
+        ]
+      },
+      {
+        "mes": "Novembro",
+        "aulas": [
+          {
+            "data": "05/11",
+            "conteudo": [
+              {
+                "titulo": "Imagens da Branquitude: a presença na ausência - Lilia Schwarcz",
+                "observacao": "Introdução até 37",
+                "link": "https://cdl-static.s3-sa-east-1.amazonaws.com/trechos/9788535937855.pdf"
+              },
+              {
+                "titulo": "Video: Lilia Schwarcz",
+                "link": "https://www.youtube.com/watch?v=-seYO4ksxt8"
+              }
+            ]
+          },
+          {
+            "data": "12/11",
+            "seminario": "Simone?",
+            "conteudo": [
+              {
+                "titulo": "Ailton Krenak - Ideias para adiar o fim do mundo",
+                "link": "https://drive.google.com/file/d/111sU_eizOS5PK_SbrDLnG7vyeGFfXLau/view?usp=sharing"
+              }
+            ]
+          },
+          {
+            "data": "19/11",
+            "seminario": "Eduardo",
+            "conteudo": [
+              {
+                "titulo": "ABDIAS DO NASCIMENTO e o Teatro Experimental do Negro"
+              },
+              {
+                "tipo": "Texto principal",
+                "link": "https://www.scielo.br/j/ea/a/B8K74xgQY56px6p5YQQP5Ff/?format=pdf&lang=pt"
+              },
+              {
+                "tipo": "Texto complementar",
+                "link": "https://drive.google.com/file/d/1UXm_BN47NnizUIvP3QgJcv2Mnlby-wvV/view?usp=drive_link"
+              },
+              {
+                "tipo": "Vídeo",
+                "titulo": "O teatro experimental do negro",
+                "link": "https://br.video.search.yahoo.com/search/video;_ylt=AwrFPlg.crFot.84qtsc6gt.;_ylc=X0kDcU8uYXpqRXdMakwyOTNDdVprdk5ZUUxYTWpnd05BQUFBQUNkZUVKTQRfUwMyMTE0NzEwMDQ0BF9yAzIEY3NyY3B2aWQDcU8uYXpqRXdMakwyOTNDdVprdk5ZUUxYTWpnd05BQUFBQUNkZUVKTQRmcgMEZnIyA3NiLXRvcARncHJpZANCNFZPczNrNFE3eVBPM2NIS1MzQkdBBG5fcnNsdAMwBG5fc3VnZwMxBG9yaWdpbgNici52aWRlby5zZWFyY2gueWFob28uY29tBHBvcwMwBHBxc3RyAwRwcXN0cmwDMARxc3RybAMzMARxdWVyeQNPJTIwdGVhdHJvJTIwZXhwZXJpbWVudGFsJTIwZG8lMjBuZWdybwR0X3N0bXADMTc1NjQ1OTU5OAR2dGVzdGlkAw--?p=O+teatro+experimental+do+negro&ei=UTF-8&iscqry=&fr=sfp&fr2=sb-top"
+              }
+            ]
+          },
+          {
+            "data": "26/11",
+            "conteudo": "Alunos entregam um resumo expandido e discutimos o artigo final"
+          }
+        ]
+      },
+      {
+        "mes": "Dezembro",
+        "aulas": [
+          {
+            "data": "03/12",
+            "conteudo": "ENCERRAMENTO"
+          }
+        ]
+      }
+    ],
+    "avaliacao": {
+      "artigo": "7 pt (entrega até 20 de janeiro)",
+      "participacao": "1 ponto",
+      "seminario": "2 ponto"
+    }
+  }
+}
