@@ -1,0 +1,213 @@
+/* Configurações Globais */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f7f6;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden; /* Para conter os cantos arredondados do header */
+}
+
+/* Cabeçalho */
+header {
+    background-color: #004a91; /* Um azul institucional */
+    color: #ffffff;
+    padding: 20px 30px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+header p {
+    margin: 5px 0;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* Seções de Conteúdo */
+section {
+    padding: 20px 30px;
+    border-bottom: 1px solid #eee;
+}
+
+section:last-of-type {
+    border-bottom: none;
+}
+
+h2 {
+    font-size: 1.8rem;
+    color: #004a91;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+h3 {
+    font-size: 1.4rem;
+    color: #111;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+/* --- Estilo dos Links --- */
+a {
+    color: #0056b3; /* Tom de azul mais escuro */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #003d80;
+    text-decoration: underline;
+}
+
+/* Link dentro do card */
+.aula-card a, .collapsible-content > ul a {
+    margin-left: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* --- Funcionalidade Interativa (Collapsible) --- */
+.collapsible-toggle {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Seta indicadora */
+.collapsible-toggle::after {
+    content: '▼';
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.collapsible-toggle.active::after {
+    transform: rotate(180deg);
+}
+
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, padding 0.5s ease;
+    padding: 0 10px;
+}
+
+/* Classe 'open' que o JS adicionará */
+.collapsible-content.open {
+    max-height: 10000px; /* Valor alto para permitir expansão */
+    padding: 15px 10px;
+}
+
+/* Deixar a primeira seção aberta por padrão (Opcional) */
+.info-basica .collapsible-content,
+.cronograma .collapsible-content { /* Pode adicionar .open direto no HTML se preferir */
+    max-height: 10000px;
+    padding: 15px 10px;
+}
+.info-basica .collapsible-toggle::after {
+    transform: rotate(180deg);
+}
+
+
+/* --- Cartões de Aula (Cronograma) --- */
+.aula-card {
+    background-color: #fdfdfd;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+}
+
+.aula-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.aula-card h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.aula-card p, .aula-card li {
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+}
+
+.aula-card strong {
+    color: #004a91;
+}
+
+/* --- Destaque Pessoal (Para suas atividades) --- */
+.highlight-personal {
+    background-color: #fff9e6;
+    border-left: 5px solid #ffc107;
+    padding-left: 25px; /* Ajuste para o padding do card */
+}
+
+.highlight-personal h3 {
+    color: #b38600;
+}
+
+/* Cartão de evento especial (Sem aula) */
+.special-event {
+    background-color: #f0f4f8;
+    border-left: 5px solid #6c757d;
+}
+
+/* Rodapé */
+footer {
+    text-align: center;
+    padding: 30px;
+    background-color: #343a40;
+    color: #f8f9fa;
+    font-size: 0.9rem;
+}
+
+footer h3 {
+    color: #ffffff;
+    margin-top: 0;
+}
+footer p {
+    margin: 5px 0;
+    word-break: break-all;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 768px) {
+    body {
+        padding: 0;
+    }
+
+    .container {
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    section, header {
+        padding: 20px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+}
