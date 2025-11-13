@@ -17,7 +17,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      # Mapeia os arquivos do frontend para o contêiner para atualização em tempo real.
+      # Mapeia os arquivos do frontend para o contêiner para atualização em tempo real. Ok!
       - ./frontend:/usr/share/nginx/html:z
     depends_on:
       - backend
