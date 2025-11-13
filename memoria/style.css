@@ -84,6 +84,7 @@ a:hover {
     margin-left: 8px;
     font-size: 0.9rem;
     font-weight: 600;
+    word-break: break-all; /* Quebra links longos se necessário */
 }
 
 /* --- Funcionalidade Interativa (Collapsible) --- */
