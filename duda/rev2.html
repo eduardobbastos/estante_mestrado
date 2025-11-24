@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudo Dirigido 2 - 6º Ano</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #8e44ad; /* Cor roxa para diferenciar da anterior */
+            --success: #27ae60;
+            --error: #c0392b;
+            --bg: #f4f7f6;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--accent);
+        }
+        h1 { color: var(--primary); margin: 0; }
+        h3 { color: #7f8c8d; font-weight: normal; margin-top: 5px; }
+        
+        .topic-header {
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .question-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            padding: 12px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 1em;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: #e2e6ea;
+            border-color: #cbd3da;
+        }
+
+        .option-btn.correct {
+            background-color: #d4edda !important;
+            border-color: var(--success) !important;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .option-btn.wrong {
+            background-color: #f8d7da !important;
+            border-color: var(--error) !important;
+            color: var(--error);
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .option-btn:disabled {
+            cursor: default;
+        }
+
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #856404;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-fixed {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            font-weight: bold;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Reforço de Português (Parte 2)</h1>
+    <h3>Sinônimos, Antônimos, Presente do Indicativo, Sujeito e Predicado</h3>
+</header>
+
+<div id="quiz-container"></div>
+
+<div class="score-fixed" id="score-display">
+    Acertos: 0 / 30
+</div>
+
+<script>
+    const quizData = [
+        // --- TÓPICO 1: Sinônimos e Antônimos (10 questões) ---
+        {
+            topic: "1. Sinônimos e Antônimos",
+            question: "1. Qual é o sinônimo de 'TRANQUILO'?",
+            options: ["Agitado", "Calmo", "Barulhento", "Veloz"],
+            correct: 1,
+            explanation: "Tranquilo e Calmo têm o mesmo significado, indicam paz e sossego."
+        },
+        {
+            topic: "1. Sinônimos e Antônimos",
+            question: "2. Qual é o antônimo de 'DERROTA'?",
+            options: ["Perda", "Vitória", "Fracasso", "Queda"],
+            correct: 1,
+            explanation: "O contrário de perder (derrota) é ganhar (vitória)."
+        },
+        {
+            topic: "1. Sinônimos e Antônimos",
+            question: "3. Marque a opção em que as palavras são SINÔNIMAS:",
+            options: ["Feio / Bonito", "Gritar / Berra", "Entrar / Sair", "Amigo / Inimigo"],
+            correct: 1,
+            explanation: "Gritar e Berra significam a mesma ação (emitir som alto)."
+        },
+        {
+            topic: "1. Sinônimos e Antônimos",
+            question: "4. O antônimo de 'INÍCIO' é:",
+            options: ["Começo", "Princípio", "Fim", "Origem"],
+            correct: 2,
+            explanation: "Início é o começo. O contrário (antônimo) é o Fim."
+        },
+        {
+            topic: "1. Sinônimos e Antônimos",
+            question: "5. Qual palavra tem sentido oposto a 'GENEROSO'?",
+            options: ["Bondoso", "Egoísta", "Caridoso", "Amável"],
+            correct: 1,
+            explanation: "Generoso é quem divide. Egoísta é quem só pensa em si mesmo (o oposto)."
+        },
+        {
+            topic: "1. Sinônimos e Antônimos",
+            question: "6. 'A menina reside naquela casa'. Um sinônimo para 'reside' é:",
+            options: ["Mora", "Trabalha", "Brinca", "Passa"],
+            correct: 0,
+            explanation: "Residir é o mesmo que morar."
+        },
+        {
+            topic: "1. Sinônimos e Antônimos",
+            question: "7. Antônimo de 'ÁSPERO':",
+            options: ["Duro", "Liso", "Rugoso", "Grosso"],
+            correct: 1,
+            explanation: "Algo que não é áspero (rugoso) é liso (macio ao tato)."
+        },
+        {
+            topic: "1. Sinônimos e Antônimos",
+            question: "8. Sinônimo de 'RÁPIDO':",
+            options: ["Lento", "Devagar", "Veloz", "Parado"],
+            correct: 2,
+            explanation: "Veloz e Rápido indicam agilidade."
+        },
+        {
+            topic: "1. Sinônimos e Antônimos",
+            question: "9. Qual par de palavras são ANTÔNIMAS?",
+            options: ["Achar / Encontrar", "Saltar / Pular", "Recordar / Esquecer", "Ver / Olhar"],
+            correct: 2,
+            explanation: "Recordar (lembrar) é o oposto de Esquecer."
+        },
+        {
+            topic: "1. Sinônimos e Antônimos",
+            question: "10. 'O dia está claro'. O antônimo de 'claro' aqui é:",
+            options: ["Iluminado", "Brilhante", "Escuro", "Limpo"],
+            correct: 2,
+            explanation: "O oposto de claro (com luz) é escuro (sem luz)."
+        },
+
+        // --- TÓPICO 2: Presente do Indicativo (10 questões) ---
+        {
+            topic: "2. Presente do Indicativo",
+            question: "11. 'Eu ______ todos os dias'. (Verbo ESTUDAR)",
+            options: ["estudei", "estudo", "estudarei", "estudava"],
+            correct: 1,
+            explanation: "No presente (agora/hábito), a conjugação correta para 'Eu' é 'estudo'."
+        },
+        {
+            topic: "2. Presente do Indicativo",
+            question: "12. Qual frase está no Presente do Indicativo?",
+            options: ["Nós viajaremos amanhã.", "Eles comeram o bolo.", "Ela canta muito bem.", "Tu partiste cedo."],
+            correct: 2,
+            explanation: "'Ela canta' indica uma ação habitual ou um fato atual. As outras opções estão no passado ou futuro."
+        },
+        {
+            topic: "2. Presente do Indicativo",
+            question: "13. Conjugue o verbo SER na 1ª pessoa (Eu):",
+            options: ["Eu és", "Eu somos", "Eu sou", "Eu é"],
+            correct: 2,
+            explanation: "Verbo Ser (Irregular): Eu sou, Tu és, Ele é..."
+        },
+        {
+            topic: "2. Presente do Indicativo",
+            question: "14. 'Nós ________ amigos.' (Verbo SER)",
+            options: ["somos", "fomos", "seremos", "são"],
+            correct: 0,
+            explanation: "No presente: Nós somos."
+        },
+        {
+            topic: "2. Presente do Indicativo",
+            question: "15. 'Elas ______ suco de laranja.' (Verbo BEBER)",
+            options: ["bebe", "bebem", "beberão", "beberam"],
+            correct: 1,
+            explanation: "Concordância com 'Elas' (plural) no presente: Elas bebem (terminação -em)."
+        },
+        {
+            topic: "2. Presente do Indicativo",
+            question: "16. Qual a terminação típica da 1ª conjugação (AR) para 'Nós' no presente?",
+            options: ["-emos (corremos)", "-imos (partimos)", "-amos (cantamos)", "-ão (cantarão)"],
+            correct: 2,
+            explanation: "Verbos terminados em AR (cantar) viram 'Nós cantamos'."
+        },
+        {
+            topic: "2. Presente do Indicativo",
+            question: "17. O presente do indicativo indica:",
+            options: ["Um fato incerto (dúvida)", "Uma ordem", "Uma ação que acontece agora ou é rotina", "Algo que já acabou"],
+            correct: 2,
+            explanation: "É o tempo da certeza no momento atual ou de verdades universais."
+        },
+        {
+            topic: "2. Presente do Indicativo",
+            question: "18. 'Tu ______ a porta?' (Verbo ABRIR)",
+            options: ["abro", "abres", "abre", "abrimos"],
+            correct: 1,
+            explanation: "Conjugação correta do Tu no presente: Tu abres (com 's' no final)."
+        },
+        {
+            topic: "2. Presente do Indicativo",
+            question: "19. Verbo IR (Irregular). 'Eu ____, tu vais.'",
+            options: ["vou", "vai", "fui", "irei"],
+            correct: 0,
+            explanation: "Verbo Ir no presente: Eu vou."
+        },
+        {
+            topic: "2. Presente do Indicativo",
+            question: "20. 'Vocês ______ futebol.' (Verbo JOGAR)",
+            options: ["jogamos", "jogas", "jogam", "jogarão"],
+            correct: 2,
+            explanation: "'Vocês' conjuga igual a 'Eles/Elas': Vocês jogam."
+        },
+
+        // --- TÓPICO 3: Sujeito e Predicado (10 questões) ---
+        {
+            topic: "3. Sujeito e Predicado",
+            question: "21. Na frase 'O pássaro azul voou longe', qual é o sujeito?",
+            options: ["O pássaro", "O pássaro azul", "Voou longe", "Azul"],
+            correct: 1,
+            explanation: "O sujeito é todo o termo sobre quem se fala, incluindo os adjetivos que o acompanham."
+        },
+        {
+            topic: "3. Sujeito e Predicado",
+            question: "22. Qual é o NÚCLEO do sujeito em 'Os meus dois irmãos chegaram'?",
+            options: ["Os", "Meus", "Dois", "Irmãos"],
+            correct: 3,
+            explanation: "O núcleo é a palavra principal, o substantivo. As outras (os, meus, dois) apenas acompanham."
+        },
+        {
+            topic: "3. Sujeito e Predicado",
+            question: "23. Identifique o predicado: 'A professora explicou a matéria'.",
+            options: ["A professora", "Explicou", "A matéria", "Explicou a matéria"],
+            correct: 3,
+            explanation: "Tirando o sujeito (A professora), tudo o que sobra é o predicado."
+        },
+        {
+            topic: "3. Sujeito e Predicado",
+            question: "24. 'Eu e você somos uma equipe'. O sujeito é:",
+            options: ["Simples", "Composto", "Oculto", "Indeterminado"],
+            correct: 1,
+            explanation: "Sujeito Composto pois tem dois núcleos: 'Eu' e 'Você'."
+        },
+        {
+            topic: "3. Sujeito e Predicado",
+            question: "25. 'Corremos na praia ontem'. O sujeito é:",
+            options: ["Simples (Nós)", "Composto", "Oculto (Nós)", "Indeterminado"],
+            correct: 2,
+            explanation: "Não está escrito na frase, mas o verbo 'corremos' indica que fomos 'Nós'. É sujeito oculto."
+        },
+        {
+            topic: "3. Sujeito e Predicado",
+            question: "26. Em 'O relógio da parede quebrou', o que é 'quebrou'?",
+            options: ["Sujeito", "Verbo / Núcleo do Predicado", "Adjetivo", "Núcleo do Sujeito"],
+            correct: 1,
+            explanation: "Quebrou é a ação. É o verbo principal do predicado."
+        },
+        {
+            topic: "3. Sujeito e Predicado",
+            question: "27. Qual frase tem Sujeito SIMPLES?",
+            options: ["Ana e Bia saíram.", "Caíram lápis e borracha.", "O menino estudioso passou.", "Falam muito de você."],
+            correct: 2,
+            explanation: "'O menino estudioso' tem apenas UM núcleo (menino), logo é simples. As outras são compostas ou indeterminadas."
+        },
+        {
+            topic: "3. Sujeito e Predicado",
+            question: "28. 'Choveu muito ontem à noite'. O sujeito é:",
+            options: ["A chuva", "Oculto", "Inexistente", "Simples"],
+            correct: 2,
+            explanation: "Verbos que indicam fenômenos da natureza (chover, nevar) formam orações sem sujeito (sujeito inexistente)."
+        },
+        {
+            topic: "3. Sujeito e Predicado",
+            question: "29. Separe o sujeito de: 'Aquela linda flor murchou'.",
+            options: ["Aquela", "Aquela linda", "Aquela linda flor", "Flor"],
+            correct: 2,
+            explanation: "Todo o bloco 'Aquela linda flor' é o sujeito."
+        },
+        {
+            topic: "3. Sujeito e Predicado",
+            question: "30. O predicado verbal tem como núcleo:",
+            options: ["Um nome (adjetivo)", "Um verbo de ação", "O sujeito", "Uma preposição"],
+            correct: 1,
+            explanation: "No predicado verbal (o mais comum no 6º ano), a palavra mais importante é o verbo que indica ação."
+        }
+    ];
+
+    let score = 0;
+    const container = document.getElementById('quiz-container');
+    const scoreDisplay = document.getElementById('score-display');
+
+    function renderQuiz() {
+        let currentTopic = "";
+
+        quizData.forEach((item, index) => {
+            if (item.topic !== currentTopic) {
+                const topicHeader = document.createElement('div');
+                topicHeader.className = 'topic-header';
+                topicHeader.innerText = item.topic;
+                container.appendChild(topicHeader);
+                currentTopic = item.topic;
+            }
+
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            
+            const qText = document.createElement('div');
+            qText.className = 'question-text';
+            qText.innerText = item.question;
+            card.appendChild(qText);
+
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options-grid';
+
+            item.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(btn, i, item.correct, item.explanation, card);
+                optionsDiv.appendChild(btn);
+            });
+
+            card.appendChild(optionsDiv);
+
+            const explBox = document.createElement('div');
+            explBox.className = 'explanation-box';
+            explBox.innerHTML = `<strong>Explicação:</strong> ${item.explanation}`;
+            card.appendChild(explBox);
+
+            container.appendChild(card);
+        });
+    }
+
+    function checkAnswer(clickedBtn, selectedIndex, correctIndex, explanation, cardElement) {
+        const buttons = cardElement.querySelectorAll('.option-btn');
+        buttons.forEach(btn => btn.disabled = true);
+
+        const explBox = cardElement.querySelector('.explanation-box');
+        explBox.style.display = 'block';
+
+        if (selectedIndex === correctIndex) {
+            clickedBtn.classList.add('correct');
+            score++;
+        } else {
+            clickedBtn.classList.add('wrong');
+            buttons[correctIndex].classList.add('correct');
+        }
+        scoreDisplay.innerText = `Acertos: ${score} / ${quizData.length}`;
+    }
+
+    renderQuiz();
+</script>
+
+</body>
+</html>
