@@ -3,504 +3,609 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revisão de Português - 6º Ano</title>
+    <title>Estudo Dirigido - 6º Ano (Feedback Imediato)</title>
     <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --success: #27ae60;
+            --error: #c0392b;
+            --bg: #f4f7f6;
+        }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
             color: #333;
             line-height: 1.6;
-            margin: 0;
             padding: 20px;
-        }
-        .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-        h1 {
+        header {
             text-align: center;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        h3 {
-            text-align: center;
-            color: #7f8c8d;
-            font-weight: normal;
-            margin-top: 0;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 20px;
-        }
-        .topic-title {
-            background-color: #3498db;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 30px;
-        }
-        .question {
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-            background-color: #fafafa;
-        }
-        .options label {
-            display: block;
-            margin-bottom: 8px;
-            cursor: pointer;
-            padding: 5px;
-            border-radius: 4px;
-            transition: background 0.2s;
-        }
-        .options label:hover {
-            background-color: #e8f4fc;
-        }
-        input[type="radio"] {
-            margin-right: 10px;
-        }
-        button {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background-color: #27ae60;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background 0.3s;
-        }
-        button:hover {
-            background-color: #219150;
-        }
-        #result {
-            margin-top: 20px;
-            font-size: 20px;
-            font-weight: bold;
-            text-align: center;
+            margin-bottom: 40px;
+            background: white;
             padding: 20px;
-            border-radius: 5px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
-        /* Classes para feedback */
-        .correct-answer {
-            color: #27ae60;
+        h1 { color: var(--primary); margin: 0; }
+        h3 { color: #7f8c8d; font-weight: normal; margin-top: 5px; }
+        
+        .topic-header {
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.2em;
             font-weight: bold;
-            background-color: #d5f5e3 !important;
         }
-        .wrong-answer {
-            color: #c0392b;
+
+        .question-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
+        }
+        
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            padding: 12px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 1em;
+            transition: all 0.2s;
+            width: 100%;
+            outline: none;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: #e2e6ea;
+            border-color: #cbd3da;
+        }
+
+        /* Estados de Feedback */
+        .option-btn.correct {
+            background-color: #d4edda !important;
+            border-color: var(--success) !important;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .option-btn.wrong {
+            background-color: #f8d7da !important;
+            border-color: var(--error) !important;
+            color: var(--error);
             text-decoration: line-through;
-            background-color: #fadbd8 !important;
+            opacity: 0.7;
         }
-        .missed-correct {
-            color: #27ae60;
-            font-weight: bold; 
-            border: 1px dashed #27ae60;
+
+        .option-btn:disabled {
+            cursor: default;
         }
-        .feedback-text {
-            font-size: 0.9em;
-            margin-top: 5px;
-            font-style: italic;
+
+        .explanation-box {
+            display: none; /* Escondido por padrão */
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: #856404;
+            animation: fadeIn 0.5s;
         }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .score-fixed {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            font-weight: bold;
+            z-index: 1000;
+        }
+
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>📚 Revisão de Português</h1>
-    <h3>Escola Memorial Batista - 6º Ano</h3>
+<header>
+    <h1>Revisão de Português - Prova 24/11</h1>
+    <h3>Escola Memorial Batista | 6º Ano</h3>
+    <p>Responda para ver a correção e a explicação imediatamente.</p>
+</header>
 
-    <form id="quizForm">
-        
-        <div class="topic-title">1. Sujeito e Predicado</div>
-        
-        <div class="question" id="q1">
-            <p><strong>1.</strong> Na frase <em>"Os alunos estudiosos passaram na prova"</em>, qual é o predicado?</p>
-            <div class="options">
-                <label><input type="radio" name="q1" value="a"> A) Os alunos</label>
-                <label><input type="radio" name="q1" value="b"> B) Os alunos estudiosos</label>
-                <label><input type="radio" name="q1" value="c"> C) Passaram na prova</label>
-                <label><input type="radio" name="q1" value="d"> D) Na prova</label>
-            </div>
-        </div>
+<div id="quiz-container">
+    </div>
 
-        <div class="question" id="q2">
-            <p><strong>2.</strong> Complete: O ______________ é o termo sobre o qual se declara algo.</p>
-            <div class="options">
-                <label><input type="radio" name="q2" value="a"> A) Verbo</label>
-                <label><input type="radio" name="q2" value="b"> B) Predicado</label>
-                <label><input type="radio" name="q2" value="c"> C) Adjetivo</label>
-                <label><input type="radio" name="q2" value="d"> D) Sujeito</label>
-            </div>
-        </div>
-
-        <div class="question" id="q3">
-            <p><strong>3.</strong> Identifique o núcleo do sujeito na frase: <em>"A minha melhor amiga viajou."</em></p>
-            <div class="options">
-                <label><input type="radio" name="q3" value="a"> A) A minha</label>
-                <label><input type="radio" name="q3" value="b"> B) Amiga</label>
-                <label><input type="radio" name="q3" value="c"> C) Melhor</label>
-                <label><input type="radio" name="q3" value="d"> D) Viajou</label>
-            </div>
-        </div>
-
-        <div class="topic-title">2. Sentido Literal e Figurado</div>
-
-        <div class="question" id="q4">
-            <p><strong>4.</strong> Qual frase apresenta sentido <strong>figurado</strong>?</p>
-            <div class="options">
-                <label><input type="radio" name="q4" value="a"> A) A menina quebrou o vaso de vidro.</label>
-                <label><input type="radio" name="q4" value="b"> B) Aquele menino é um anjo de bondade.</label>
-                <label><input type="radio" name="q4" value="c"> C) O pássaro voou para longe.</label>
-                <label><input type="radio" name="q4" value="d"> D) Comprei uma flor na floricultura.</label>
-            </div>
-        </div>
-
-        <div class="question" id="q5">
-            <p><strong>5.</strong> No sentido _____________, a palavra assume seu significado básico, de dicionário.</p>
-            <div class="options">
-                <label><input type="radio" name="q5" value="a"> A) Figurado</label>
-                <label><input type="radio" name="q5" value="b"> B) Conotativo</label>
-                <label><input type="radio" name="q5" value="c"> C) Literal</label>
-                <label><input type="radio" name="q5" value="d"> D) Poético</label>
-            </div>
-        </div>
-
-        <div class="question" id="q6">
-            <p><strong>6.</strong> <em>"Ela tem um coração de pedra."</em> A expressão destacada significa que:</p>
-            <div class="options">
-                <label><input type="radio" name="q6" value="a"> A) O coração dela é feito de rocha.</label>
-                <label><input type="radio" name="q6" value="b"> B) Ela tem problemas cardíacos.</label>
-                <label><input type="radio" name="q6" value="c"> C) Ela é uma pessoa insensível ou dura.</label>
-                <label><input type="radio" name="q6" value="d"> D) Ela gosta de geologia.</label>
-            </div>
-        </div>
-
-        <div class="topic-title">3. Sujeito Simples e Composto</div>
-
-        <div class="question" id="q7">
-            <p><strong>7.</strong> Qual das orações abaixo possui <strong>sujeito composto</strong>?</p>
-            <div class="options">
-                <label><input type="radio" name="q7" value="a"> A) Eu fui ao cinema ontem.</label>
-                <label><input type="radio" name="q7" value="b"> B) O cão e o gato dormiam no sofá.</label>
-                <label><input type="radio" name="q7" value="c"> C) Choveu muito na cidade.</label>
-                <label><input type="radio" name="q7" value="d"> D) Os meninos jogaram bola.</label>
-            </div>
-        </div>
-
-        <div class="question" id="q8">
-            <p><strong>8.</strong> Classifique o sujeito de: <em>"Pedro comprou um carro novo."</em></p>
-            <div class="options">
-                <label><input type="radio" name="q8" value="a"> A) Sujeito Composto</label>
-                <label><input type="radio" name="q8" value="b"> B) Sujeito Oculto</label>
-                <label><input type="radio" name="q8" value="c"> C) Sujeito Simples</label>
-                <label><input type="radio" name="q8" value="d"> D) Sujeito Indeterminado</label>
-            </div>
-        </div>
-
-        <div class="question" id="q9">
-            <p><strong>9.</strong> Quando o sujeito possui apenas um núcleo, ele é chamado de ____________.</p>
-            <div class="options">
-                <label><input type="radio" name="q9" value="a"> A) Composto</label>
-                <label><input type="radio" name="q9" value="b"> B) Simples</label>
-                <label><input type="radio" name="q9" value="c"> C) Desinencial</label>
-                <label><input type="radio" name="q9" value="d"> D) Inexistente</label>
-            </div>
-        </div>
-
-        <div class="topic-title">4. Conjugações (Ar, Er, Ir)</div>
-
-        <div class="question" id="q10">
-            <p><strong>10.</strong> O verbo <strong>"PARTIR"</strong> pertence a qual conjugação?</p>
-            <div class="options">
-                <label><input type="radio" name="q10" value="a"> A) 1ª conjugação</label>
-                <label><input type="radio" name="q10" value="b"> B) 2ª conjugação</label>
-                <label><input type="radio" name="q10" value="c"> C) 3ª conjugação</label>
-                <label><input type="radio" name="q10" value="d"> D) Não tem conjugação</label>
-            </div>
-        </div>
-
-        <div class="question" id="q11">
-            <p><strong>11.</strong> Qual das opções contém apenas verbos da <strong>1ª conjugação</strong> (terminados em -AR)?</p>
-            <div class="options">
-                <label><input type="radio" name="q11" value="a"> A) Amar, Beber, Sorrir</label>
-                <label><input type="radio" name="q11" value="b"> B) Cantar, Falar, Dançar</label>
-                <label><input type="radio" name="q11" value="c"> C) Correr, Vender, Comer</label>
-                <label><input type="radio" name="q11" value="d"> D) Partir, Dividir, Cair</label>
-            </div>
-        </div>
-
-        <div class="question" id="q12">
-            <p><strong>12.</strong> Os verbos terminados em -ER pertencem à _____ conjugação.</p>
-            <div class="options">
-                <label><input type="radio" name="q12" value="a"> A) Primeira</label>
-                <label><input type="radio" name="q12" value="b"> B) Segunda</label>
-                <label><input type="radio" name="q12" value="c"> C) Terceira</label>
-                <label><input type="radio" name="q12" value="d"> D) Quarta</label>
-            </div>
-        </div>
-
-         <div class="topic-title">5. Regras de Acentuação</div>
-         <div class="question" id="q13">
-             <p><strong>13.</strong> A palavra <strong>"LÂMPADA"</strong> é acentuada porque é uma:</p>
-             <div class="options">
-                 <label><input type="radio" name="q13" value="a"> A) Oxítona terminada em A.</label>
-                 <label><input type="radio" name="q13" value="b"> B) Paroxítona terminada em A.</label>
-                 <label><input type="radio" name="q13" value="c"> C) Proparoxítona.</label>
-                 <label><input type="radio" name="q13" value="d"> D) Monossílaba tônica.</label>
-             </div>
-         </div>
-         <div class="question" id="q14">
-             <p><strong>14.</strong> Qual palavra abaixo <strong>não</strong> deve levar acento?</p>
-             <div class="options">
-                 <label><input type="radio" name="q14" value="a"> A) Vovô</label>
-                 <label><input type="radio" name="q14" value="b"> B) Cafe</label>
-                 <label><input type="radio" name="q14" value="c"> C) Tatu</label>
-                 <label><input type="radio" name="q14" value="d"> D) Armazem</label>
-             </div>
-         </div>
-         <div class="question" id="q15">
-             <p><strong>15.</strong> A palavra "fácil" leva acento porque é uma paroxítona terminada em ______.</p>
-             <div class="options">
-                 <label><input type="radio" name="q15" value="a"> A) L</label>
-                 <label><input type="radio" name="q15" value="b"> B) O</label>
-                 <label><input type="radio" name="q15" value="c"> C) R</label>
-                 <label><input type="radio" name="q15" value="d"> D) X</label>
-             </div>
-         </div>
-
-         <div class="topic-title">6. Encontros Vocálicos</div>
-         <div class="question" id="q16">
-             <p><strong>16.</strong> Na palavra <strong>"SAÚDE"</strong>, ocorre um:</p>
-             <div class="options">
-                 <label><input type="radio" name="q16" value="a"> A) Ditongo</label>
-                 <label><input type="radio" name="q16" value="b"> B) Tritongo</label>
-                 <label><input type="radio" name="q16" value="c"> C) Hiato</label>
-                 <label><input type="radio" name="q16" value="d"> D) Dígrafo</label>
-             </div>
-         </div>
-         <div class="question" id="q17">
-             <p><strong>17.</strong> Qual palavra abaixo apresenta um <strong>ditongo</strong>?</p>
-             <div class="options">
-                 <label><input type="radio" name="q17" value="a"> A) Lua</label>
-                 <label><input type="radio" name="q17" value="b"> B) Peixe</label>
-                 <label><input type="radio" name="q17" value="c"> C) Dia</label>
-                 <label><input type="radio" name="q17" value="d"> D) País</label>
-             </div>
-         </div>
-         <div class="question" id="q18">
-             <p><strong>18.</strong> Em "Paraguai", o encontro vocálico "uai" é classificado como:</p>
-             <div class="options">
-                 <label><input type="radio" name="q18" value="a"> A) Hiato</label>
-                 <label><input type="radio" name="q18" value="b"> B) Ditongo crescente</label>
-                 <label><input type="radio" name="q18" value="c"> C) Tritongo</label>
-                 <label><input type="radio" name="q18" value="d"> D) Ditongo decrescente</label>
-             </div>
-         </div>
-
-         <div class="topic-title">7. Sinônimo e Antônimo</div>
-         <div class="question" id="q19">
-             <p><strong>19.</strong> Qual é o <strong>sinônimo</strong> de "CONTENTE"?</p>
-             <div class="options">
-                 <label><input type="radio" name="q19" value="a"> A) Triste</label>
-                 <label><input type="radio" name="q19" value="b"> B) Alegre</label>
-                 <label><input type="radio" name="q19" value="c"> C) Furioso</label>
-                 <label><input type="radio" name="q19" value="d"> D) Cansado</label>
-             </div>
-         </div>
-         <div class="question" id="q20">
-             <p><strong>20.</strong> Marque o <strong>antônimo</strong> de "CORAJOSO":</p>
-             <div class="options">
-                 <label><input type="radio" name="q20" value="a"> A) Valente</label>
-                 <label><input type="radio" name="q20" value="b"> B) Destemido</label>
-                 <label><input type="radio" name="q20" value="c"> C) Medroso</label>
-                 <label><input type="radio" name="q20" value="d"> D) Forte</label>
-             </div>
-         </div>
-         <div class="question" id="q21">
-             <p><strong>21.</strong> "Alto" é antônimo de "baixo", assim como "claro" é antônimo de __________. </p>
-             <div class="options">
-                 <label><input type="radio" name="q21" value="a"> A) Escuro</label>
-                 <label><input type="radio" name="q21" value="b"> B) Brilhante</label>
-                 <label><input type="radio" name="q21" value="c"> C) Limpo</label>
-                 <label><input type="radio" name="q21" value="d"> D) Iluminado</label>
-             </div>
-         </div>
-
-         <div class="topic-title">8. Sílaba Tônica</div>
-         <div class="question" id="q22">
-             <p><strong>22.</strong> Na palavra <strong>"CAFÉ"</strong>, a sílaba tônica é a última. Ela é:</p>
-             <div class="options">
-                 <label><input type="radio" name="q22" value="a"> A) Oxítona</label>
-                 <label><input type="radio" name="q22" value="b"> B) Paroxítona</label>
-                 <label><input type="radio" name="q22" value="c"> C) Proparoxítona</label>
-                 <label><input type="radio" name="q22" value="d"> D) Átona</label>
-             </div>
-         </div>
-         <div class="question" id="q23">
-             <p><strong>23.</strong> Qual das palavras abaixo é <strong>paroxítona</strong> (penúltima sílaba forte)?</p>
-             <div class="options">
-                 <label><input type="radio" name="q23" value="a"> A) Árvore</label>
-                 <label><input type="radio" name="q23" value="b"> B) Janela</label>
-                 <label><input type="radio" name="q23" value="c"> C) Sofá</label>
-                 <label><input type="radio" name="q23" value="d"> D) Matemática</label>
-             </div>
-         </div>
-         <div class="question" id="q24">
-             <p><strong>24.</strong> Classifique a palavra <strong>"MÉDICO"</strong>:</p>
-             <div class="options">
-                 <label><input type="radio" name="q24" value="a"> A) Oxítona</label>
-                 <label><input type="radio" name="q24" value="b"> B) Paroxítona</label>
-                 <label><input type="radio" name="q24" value="c"> C) Proparoxítona</label>
-                 <label><input type="radio" name="q24" value="d"> D) Monossílaba</label>
-             </div>
-         </div>
-
-         <div class="topic-title">9. Modos Verbais</div>
-         <div class="question" id="q25">
-             <p><strong>25.</strong> O modo verbal que exprime uma <strong>ordem, pedido ou conselho</strong> é o:</p>
-             <div class="options">
-                 <label><input type="radio" name="q25" value="a"> A) Indicativo</label>
-                 <label><input type="radio" name="q25" value="b"> B) Subjuntivo</label>
-                 <label><input type="radio" name="q25" value="c"> C) Imperativo</label>
-                 <label><input type="radio" name="q25" value="d"> D) Infinitivo</label>
-             </div>
-         </div>
-         <div class="question" id="q26">
-             <p><strong>26.</strong> Na frase <em>"Talvez eu vá à festa"</em>, o verbo indica dúvida. Qual é o modo?</p>
-             <div class="options">
-                 <label><input type="radio" name="q26" value="a"> A) Indicativo</label>
-                 <label><input type="radio" name="q26" value="b"> B) Subjuntivo</label>
-                 <label><input type="radio" name="q26" value="c"> C) Imperativo</label>
-                 <label><input type="radio" name="q26" value="d"> D) Gerúndio</label>
-             </div>
-         </div>
-         <div class="question" id="q27">
-             <p><strong>27.</strong> <em>"Eu estudo todos os dias."</em> O verbo indica certeza. Modo:</p>
-             <div class="options">
-                 <label><input type="radio" name="q27" value="a"> A) Indicativo</label>
-                 <label><input type="radio" name="q27" value="b"> B) Subjuntivo</label>
-                 <label><input type="radio" name="q27" value="c"> C) Imperativo</label>
-                 <label><input type="radio" name="q27" value="d"> D) Participio</label>
-             </div>
-         </div>
-
-         <div class="topic-title">10. Tempos Verbais</div>
-         <div class="question" id="q28">
-             <p><strong>28.</strong> <em>"Eles jogarão futebol amanhã."</em> O verbo está no:</p>
-             <div class="options">
-                 <label><input type="radio" name="q28" value="a"> A) Presente</label>
-                 <label><input type="radio" name="q28" value="b"> B) Pretérito Perfeito</label>
-                 <label><input type="radio" name="q28" value="c"> C) Pretérito Imperfeito</label>
-                 <label><input type="radio" name="q28" value="d"> D) Futuro do Presente</label>
-             </div>
-         </div>
-         <div class="question" id="q29">
-             <p><strong>29.</strong> <em>"Eu comi bolo ontem."</em> A ação já foi concluída. Tempo:</p>
-             <div class="options">
-                 <label><input type="radio" name="q29" value="a"> A) Presente</label>
-                 <label><input type="radio" name="q29" value="b"> B) Pretérito Perfeito</label>
-                 <label><input type="radio" name="q29" value="c"> C) Futuro</label>
-                 <label><input type="radio" name="q29" value="d"> D) Pretérito Imperfeito</label>
-             </div>
-         </div>
-         <div class="question" id="q30">
-             <p><strong>30.</strong> O tempo verbal que indica algo acontecendo <strong>agora</strong> é o:</p>
-             <div class="options">
-                 <label><input type="radio" name="q30" value="a"> A) Futuro</label>
-                 <label><input type="radio" name="q30" value="b"> B) Pretérito</label>
-                 <label><input type="radio" name="q30" value="c"> C) Presente</label>
-                 <label><input type="radio" name="q30" value="d"> D) Condicional</label>
-             </div>
-         </div>
-
-        <button type="button" onclick="checkAnswers()">Corrigir Avaliação</button>
-    </form>
-
-    <div id="result"></div>
+<div class="score-fixed" id="score-display">
+    Acertos: 0 / 50
 </div>
 
 <script>
-    // Gabarito
-    const correctAnswers = {
-        q1: 'c', q2: 'd', q3: 'b',
-        q4: 'b', q5: 'c', q6: 'c',
-        q7: 'b', q8: 'c', q9: 'b',
-        q10: 'c', q11: 'b', q12: 'b',
-        q13: 'c', q14: 'c', q15: 'a',
-        q16: 'c', q17: 'b', q18: 'c',
-        q19: 'b', q20: 'c', q21: 'a',
-        q22: 'a', q23: 'b', q24: 'c',
-        q25: 'c', q26: 'b', q27: 'a',
-        q28: 'd', q29: 'b', q30: 'c'
-    };
+    // Banco de Dados das Questões (Array de Objetos)
+    const quizData = [
+        // --- TÓPICO 1: Sujeito e Predicado ---
+        {
+            topic: "1. Sujeito e Predicado",
+            question: "1. Na frase 'Os alunos estudiosos passaram na prova', qual é o predicado?",
+            options: ["Os alunos", "Os alunos estudiosos", "Passaram na prova", "Na prova"],
+            correct: 2,
+            explanation: "O predicado é tudo aquilo que se diz sobre o sujeito. Quem passou? Os alunos (sujeito). O que eles fizeram? Passaram na prova (predicado)."
+        },
+        {
+            topic: "1. Sujeito e Predicado",
+            question: "2. O termo sobre o qual se declara algo é chamado de:",
+            options: ["Verbo", "Predicado", "Adjetivo", "Sujeito"],
+            correct: 3,
+            explanation: "O sujeito é o termo da oração que sofre ou pratica a ação e sobre o qual se dá uma informação."
+        },
+        {
+            topic: "1. Sujeito e Predicado",
+            question: "3. Identifique o núcleo do sujeito em: 'A minha melhor amiga viajou'.",
+            options: ["A minha", "Amiga", "Melhor", "Viajou"],
+            correct: 1,
+            explanation: "O núcleo é a palavra mais importante do sujeito. Embora 'melhor' caracterize, o substantivo principal é 'amiga'."
+        },
+        {
+            topic: "1. Sujeito e Predicado",
+            question: "4. Na frase 'Chegaram as encomendas', qual é o sujeito?",
+            options: ["Eles", "Encomendas", "As encomendas", "Chegaram"],
+            correct: 2,
+            explanation: "A frase está na ordem inversa. Quem chegou? 'As encomendas'. Logo, este é o sujeito."
+        },
+        {
+            topic: "1. Sujeito e Predicado",
+            question: "5. O predicado sempre contém:",
+            options: ["Um adjetivo", "Um verbo", "Um substantivo", "Uma preposição"],
+            correct: 1,
+            explanation: "Para existir predicado, é obrigatória a presença de um verbo (ou locução verbal) que informe algo sobre o sujeito."
+        },
 
-    function checkAnswers() {
-        let score = 0;
-        const total = Object.keys(correctAnswers).length;
-        const resultDiv = document.getElementById('result');
+        // --- TÓPICO 2: Sentido Literal e Figurado ---
+        {
+            topic: "2. Sentido Literal e Figurado",
+            question: "6. Qual frase apresenta sentido FIGURADO?",
+            options: ["A menina quebrou o copo.", "Aquele menino é um anjo.", "O pássaro voou.", "Comprei flores."],
+            correct: 1,
+            explanation: "O menino não é literalmente um ser celestial (anjo). A palavra foi usada para dizer que ele é bondoso. Isso é sentido figurado."
+        },
+        {
+            topic: "2. Sentido Literal e Figurado",
+            question: "7. O sentido literal também é conhecido como sentido:",
+            options: ["Conotativo", "Denotativo", "Poético", "Abstrato"],
+            correct: 1,
+            explanation: "Lembre-se: Denotativo = Dicionário (Literal). Conotativo = Criativo (Figurado)."
+        },
+        {
+            topic: "2. Sentido Literal e Figurado",
+            question: "8. 'Ela engoliu sapos no trabalho'. O que isso significa?",
+            options: ["Ela comeu animais.", "Ela gosta de biologia.", "Ela suportou coisas desagradáveis calada.", "Ela estava com fome."],
+            correct: 2,
+            explanation: "É uma expressão figurada. 'Engolir sapo' significa aguentar ofensas ou situações chatas sem reclamar."
+        },
+        {
+            topic: "2. Sentido Literal e Figurado",
+            question: "9. Qual frase está no sentido LITERAL?",
+            options: ["O sol é o rei dos astros.", "Estou morrendo de rir.", "O sol aquece a Terra.", "Você é meu sol."],
+            correct: 2,
+            explanation: "'O sol aquece a Terra' é um fato científico real. Todas as outras usam metáforas (rei, morrendo, você é sol)."
+        },
+        {
+            topic: "2. Sentido Literal e Figurado",
+            question: "10. Sentido figurado é muito comum em:",
+            options: ["Manuais de instrução", "Poemas e letras de música", "Notícias de jornal", "Bulas de remédio"],
+            correct: 1,
+            explanation: "Poemas e músicas usam a criatividade e múltiplos significados (conotação). Textos informativos usam sentido literal."
+        },
 
-        // Limpar estilos anteriores
-        document.querySelectorAll('label').forEach(l => {
-            l.classList.remove('correct-answer', 'wrong-answer', 'missed-correct');
-        });
-        document.querySelectorAll('.feedback-text').forEach(e => e.remove());
+        // --- TÓPICO 3: Sujeito Simples e Composto ---
+        {
+            topic: "3. Sujeito Simples e Composto",
+            question: "11. Qual oração possui sujeito composto?",
+            options: ["Eu fui à festa.", "O gato e o cachorro fugiram.", "Choveu ontem.", "Nós estudamos muito."],
+            correct: 1,
+            explanation: "Sujeito composto tem dois ou mais núcleos. Aqui temos 'gato' e 'cachorro' praticando a ação."
+        },
+        {
+            topic: "3. Sujeito Simples e Composto",
+            question: "12. 'Nós vamos ao parque'. O sujeito é:",
+            options: ["Simples", "Composto", "Indeterminado", "Inexistente"],
+            correct: 0,
+            explanation: "O sujeito é 'Nós'. Apesar de representar várias pessoas, é apenas UMA palavra (um pronome), logo é sujeito Simples (um núcleo)."
+        },
+        {
+            topic: "3. Sujeito Simples e Composto",
+            question: "13. Em 'Compramos um carro', o sujeito é:",
+            options: ["Simples (explícito)", "Oculto (nós)", "Composto", "Indeterminado"],
+            correct: 1,
+            explanation: "O sujeito não está escrito, mas pela terminação do verbo 'compramos', sabemos que fomos 'Nós'. Chama-se Oculto ou Desinencial."
+        },
+        {
+            topic: "3. Sujeito Simples e Composto",
+            question: "14. Qual frase NÃO tem sujeito composto?",
+            options: ["Pedro e Paulo saíram.", "Livros e cadernos caíram.", "A mãe e a filha conversaram.", "Os meus amigos chegaram."],
+            correct: 3,
+            explanation: "'Os meus amigos' tem apenas um núcleo: amigos. O 's' indica plural, não sujeito composto. Sujeito composto precisa de dois núcleos distintos (ex: Pedro e Paulo)."
+        },
+        {
+            topic: "3. Sujeito Simples e Composto",
+            question: "15. 'Fogo e água não se misturam'. Os núcleos do sujeito são:",
+            options: ["Não e se", "Misturam", "Fogo e água", "Água"],
+            correct: 2,
+            explanation: "Os núcleos são as palavras centrais: 'Fogo', 'Água'."
+        },
 
-        for (let q in correctAnswers) {
-            const selected = document.querySelector(`input[name="${q}"]:checked`);
-            const questionDiv = document.getElementById(q);
-            const correctVal = correctAnswers[q];
+        // --- TÓPICO 4: Conjugações ---
+        {
+            topic: "4. Conjugações (ar, er, ir)",
+            question: "16. O verbo 'SORRIR' pertence a qual conjugação?",
+            options: ["1ª (AR)", "2ª (ER)", "3ª (IR)", "4ª (OR)"],
+            correct: 2,
+            explanation: "Termina em IR, logo é da 3ª conjugação."
+        },
+        {
+            topic: "4. Conjugações (ar, er, ir)",
+            question: "17. O verbo 'POR' (e seus derivados como compor, repor) pertence a qual conjugação?",
+            options: ["1ª conjugação", "2ª conjugação", "3ª conjugação", "Nenhuma"],
+            correct: 1,
+            explanation: "Essa é pegadinha clássica! O verbo 'pôr' vem do latim 'poer', então ele pertence à 2ª conjugação (terminados em ER)."
+        },
+        {
+            topic: "4. Conjugações (ar, er, ir)",
+            question: "18. Marque a opção onde TODOS são da 1ª conjugação:",
+            options: ["Amar, Fazer, Cantar", "Dançar, Pular, Falar", "Correr, Varrer, Beber", "Partir, Dividir, Sair"],
+            correct: 1,
+            explanation: "Dançar, Pular e Falar terminam em AR."
+        },
+        {
+            topic: "4. Conjugações (ar, er, ir)",
+            question: "19. Qual verbo abaixo é da 2ª conjugação?",
+            options: ["Assistir", "Andar", "Escrever", "Subir"],
+            correct: 2,
+            explanation: "Escrever termina em ER."
+        },
+        {
+            topic: "4. Conjugações (ar, er, ir)",
+            question: "20. Identifique a conjugação de 'FUGIR':",
+            options: ["1ª conjugação", "2ª conjugação", "3ª conjugação", "Irregular"],
+            correct: 2,
+            explanation: "Fugir termina em IR, portanto, 3ª conjugação."
+        },
 
-            if (selected) {
-                if (selected.value === correctVal) {
-                    score++;
-                    selected.parentElement.classList.add('correct-answer');
-                } else {
-                    selected.parentElement.classList.add('wrong-answer');
-                    
-                    // Destacar a correta
-                    const correctInput = document.querySelector(`input[name="${q}"][value="${correctVal}"]`);
-                    if(correctInput) {
-                        correctInput.parentElement.classList.add('missed-correct');
-                    }
-                }
-            } else {
-                // Se não respondeu, mostra qual era a certa
-                 const correctInput = document.querySelector(`input[name="${q}"][value="${correctVal}"]`);
-                 if(correctInput) {
-                     correctInput.parentElement.classList.add('missed-correct');
-                 }
+        // --- TÓPICO 5: Acentuação ---
+        {
+            topic: "5. Regras de Acentuação",
+            question: "21. 'LÂMPADA' é acentuada porque é:",
+            options: ["Oxítona", "Paroxítona", "Proparoxítona", "Monossílaba"],
+            correct: 2,
+            explanation: "A antepenúltima sílaba é forte (LÂM-pa-da). Regra de ouro: TODA proparoxítona é acentuada."
+        },
+        {
+            topic: "5. Regras de Acentuação",
+            question: "22. Qual paroxítona abaixo deve ser acentuada?",
+            options: ["Casa", "Mesa", "Taxi", "Parede"],
+            correct: 2,
+            explanation: "Paroxítonas terminadas em 'i' (ou 'is') são acentuadas. Ex: Táxi, Lápis. As terminadas em 'a' ou 'e' (casa, mesa, parede) geralmente não levam acento."
+        },
+        {
+            topic: "5. Regras de Acentuação",
+            question: "23. Por que 'Vovô' tem acento?",
+            options: ["É paroxítona terminada em O.", "É oxítona terminada em O.", "É proparoxítona.", "É monossílabo."],
+            correct: 1,
+            explanation: "Oxítonas (última forte) terminadas em A, E, O, EM, ENS são acentuadas."
+        },
+        {
+            topic: "5. Regras de Acentuação",
+            question: "24. A palavra 'CAJU' não tem acento porque:",
+            options: ["É oxítona terminada em U.", "É paroxítona.", "É proparoxítona.", "O 'U' é fraco."],
+            correct: 0,
+            explanation: "Oxítonas terminadas em 'I' ou 'U' NÃO levam acento (exceto em casos de hiato). Ex: Caju, Urubu, Saci."
+        },
+        {
+            topic: "5. Regras de Acentuação",
+            question: "25. Qual palavra está acentuada INCORRETAMENTE?",
+            options: ["Parabéns", "Árvore", "Raiíz", "Sofá"],
+            correct: 2,
+            explanation: "Raiz não tem acento. Apenas 'raízes' tem. No singular, o 'z' final faz a sílaba forte naturalmente."
+        },
+
+        // --- TÓPICO 6: Encontros Vocálicos ---
+        {
+            topic: "6. Encontros Vocálicos",
+            question: "26. Em 'SAÚDE', temos um:",
+            options: ["Ditongo", "Tritongo", "Hiato", "Dígrafo"],
+            correct: 2,
+            explanation: "Separa-se: Sa-ú-de. Quando duas vogais ficam em sílabas separadas, é um HIATO."
+        },
+        {
+            topic: "6. Encontros Vocálicos",
+            question: "27. Marque a palavra com DITONGO:",
+            options: ["Lua", "Noite", "Dia", "Coelho"],
+            correct: 1,
+            explanation: "Noite se separa 'Noi-te'. O 'oi' fica junto na mesma sílaba. Isso é um ditongo."
+        },
+        {
+            topic: "6. Encontros Vocálicos",
+            question: "28. 'Paraguai' e 'Uruguai' são exemplos de:",
+            options: ["Hiato", "Ditongo", "Tritongo", "Dígrafo"],
+            correct: 2,
+            explanation: "Temos três sons vocálicos juntos na mesma sílaba (u-a-i). Isso é um tritongo."
+        },
+        {
+            topic: "6. Encontros Vocálicos",
+            question: "29. Na palavra 'Coração', o ão forma um:",
+            options: ["Hiato", "Ditongo Nasal", "Tritongo", "Encontro Consonantal"],
+            correct: 1,
+            explanation: "As vogais ficam juntas e o som sai pelo nariz (nasal). É um ditongo."
+        },
+        {
+            topic: "6. Encontros Vocálicos",
+            question: "30. Qual palavra possui Hiato?",
+            options: ["Pai", "Mãe", "Baú", "Peixe"],
+            correct: 2,
+            explanation: "Separação: Ba-ú. Vogais separadas = Hiato."
+        },
+
+        // --- TÓPICO 7: Sinônimos e Antônimos ---
+        {
+            topic: "7. Sinônimo e Antônimo",
+            question: "31. Sinônimo de 'DISTANTE':",
+            options: ["Perto", "Longe", "Estreito", "Alto"],
+            correct: 1,
+            explanation: "Distante e longe têm o mesmo significado."
+        },
+        {
+            topic: "7. Sinônimo e Antônimo",
+            question: "32. Antônimo de 'SÁBIO':",
+            options: ["Inteligente", "Culto", "Ignorante", "Esperto"],
+            correct: 2,
+            explanation: "Antônimo é o contrário. O contrário de quem sabe muito (sábio) é quem ignora o conhecimento (ignorante)."
+        },
+        {
+            topic: "7. Sinônimo e Antônimo",
+            question: "33. Qual par são SINÔNIMOS?",
+            options: ["Claro/Escuro", "Belo/Bonito", "Alto/Baixo", "Frio/Quente"],
+            correct: 1,
+            explanation: "Belo e Bonito significam a mesma coisa."
+        },
+        {
+            topic: "7. Sinônimo e Antônimo",
+            question: "34. O antônimo de 'EFÊMERO' (que dura pouco) é:",
+            options: ["Passageiro", "Breve", "Duradouro", "Rápido"],
+            correct: 2,
+            explanation: "Se efêmero acaba logo, o contrário é algo que dura muito (duradouro)."
+        },
+        {
+            topic: "7. Sinônimo e Antônimo",
+            question: "35. Sinônimo de 'AUXILIAR':",
+            options: ["Atrapalhar", "Ajudar", "Ignorar", "Correr"],
+            correct: 1,
+            explanation: "Auxiliar é o mesmo que dar ajuda."
+        },
+
+        // --- TÓPICO 8: Sílaba Tônica ---
+        {
+            topic: "8. Sílaba Tônica",
+            question: "36. Onde está a sílaba tônica de 'JACARÉ'?",
+            options: ["Última (Oxítona)", "Penúltima (Paroxítona)", "Antepenúltima (Proparoxítona)", "No início"],
+            correct: 0,
+            explanation: "A força está no 'RÉ'. Última sílaba forte = Oxítona."
+        },
+        {
+            topic: "8. Sílaba Tônica",
+            question: "37. Qual palavra é PAROXÍTONA?",
+            options: ["Caju", "Felicidade", "Lâmpada", "Sofá"],
+            correct: 1,
+            explanation: "Separação: Fe-li-ci-DA-de. A penúltima é a forte. (Dica: a maioria das palavras em português são paroxítonas)."
+        },
+        {
+            topic: "8. Sílaba Tônica",
+            question: "38. 'Mágico' é classificada como:",
+            options: ["Oxítona", "Paroxítona", "Proparoxítona", "Átona"],
+            correct: 2,
+            explanation: "MÁ-gi-co. Antepenúltima forte."
+        },
+        {
+            topic: "8. Sílaba Tônica",
+            question: "39. Identifique a sílaba tônica de 'COMPUTADOR':",
+            options: ["Com", "Pu", "Ta", "Dor"],
+            correct: 3,
+            explanation: "Fale a palavra chamando alguém: 'Ô Computadooooor'. A sílaba que estica é a tônica (DOR). É oxítona."
+        },
+        {
+            topic: "8. Sílaba Tônica",
+            question: "40. Todas as proparoxítonas são:",
+            options: ["Terminadas em S", "Acentuadas", "Verbos", "Substantivos"],
+            correct: 1,
+            explanation: "Regra absoluta: Toda proparoxítona deve receber acento gráfico."
+        },
+
+        // --- TÓPICO 9: Modos Verbais ---
+        {
+            topic: "9. Modos Verbais",
+            question: "41. Modo que indica CERTEZA:",
+            options: ["Subjuntivo", "Imperativo", "Indicativo", "Infinitivo"],
+            correct: 2,
+            explanation: "O Indicativo aponta um fato real, uma certeza (ex: Eu estudo)."
+        },
+        {
+            topic: "9. Modos Verbais",
+            question: "42. 'Tomara que chova hoje'. O verbo expressa desejo/dúvida. Modo:",
+            options: ["Indicativo", "Subjuntivo", "Imperativo", "Gerúndio"],
+            correct: 1,
+            explanation: "O Subjuntivo é o modo da hipótese, da dúvida ou do desejo."
+        },
+        {
+            topic: "9. Modos Verbais",
+            question: "43. 'Faça sua tarefa agora!'. Modo:",
+            options: ["Indicativo", "Subjuntivo", "Imperativo", "Particípio"],
+            correct: 2,
+            explanation: "O Imperativo indica ordem, pedido ou conselho."
+        },
+        {
+            topic: "9. Modos Verbais",
+            question: "44. Qual frase está no SUBJUNTIVO?",
+            options: ["Eu fui à praia.", "Se eu ganhasse na loteria...", "Compre pão.", "O céu está azul."],
+            correct: 1,
+            explanation: "'Se eu ganhasse' indica uma condição/hipótese, não um fato real."
+        },
+        {
+            topic: "9. Modos Verbais",
+            question: "45. O modo Imperativo pode ser:",
+            options: ["Afirmativo e Negativo", "Presente e Passado", "Futuro e Pretérito", "Simples e Composto"],
+            correct: 0,
+            explanation: "Existem apenas Imperativo Afirmativo (Faça!) e Imperativo Negativo (Não faça!)."
+        },
+
+        // --- TÓPICO 10: Tempos Verbais ---
+        {
+            topic: "10. Tempos Verbais",
+            question: "46. 'Eu ESTUDAVA quando ele chegou'. O verbo destacado é:",
+            options: ["Pretérito Perfeito", "Pretérito Imperfeito", "Futuro", "Presente"],
+            correct: 1,
+            explanation: "Pretérito Imperfeito indica uma ação passada que não foi concluída ou que era habitual (Estudava, comia, corria)."
+        },
+        {
+            topic: "10. Tempos Verbais",
+            question: "47. 'Eles farão a prova'. Tempo:",
+            options: ["Passado", "Presente", "Futuro do Presente", "Futuro do Pretérito"],
+            correct: 2,
+            explanation: "É algo que ainda vai acontecer com certeza."
+        },
+        {
+            topic: "10. Tempos Verbais",
+            question: "48. 'Eu falaria a verdade, se pudesse'. 'Falaria' é:",
+            options: ["Futuro do Presente", "Futuro do Pretérito", "Pretérito Perfeito", "Presente"],
+            correct: 1,
+            explanation: "Futuro do Pretérito indica algo que aconteceria sob uma condição (terminação -ria)."
+        },
+        {
+            topic: "10. Tempos Verbais",
+            question: "49. 'Nós viajamos ontem'. A ação acabou totalmente. Tempo:",
+            options: ["Pretérito Perfeito", "Pretérito Imperfeito", "Pretérito Mais-que-perfeito", "Futuro"],
+            correct: 0,
+            explanation: "Pretérito Perfeito = Passado acabado, concluído."
+        },
+        {
+            topic: "10. Tempos Verbais",
+            question: "50. 'Ele joga bola agora'. Tempo:",
+            options: ["Pretérito", "Futuro", "Presente", "Infinitivo"],
+            correct: 2,
+            explanation: "Ação que ocorre no momento da fala."
+        }
+    ];
+
+    // Variáveis de controle
+    let score = 0;
+    const container = document.getElementById('quiz-container');
+    const scoreDisplay = document.getElementById('score-display');
+
+    // Função para renderizar as questões
+    function renderQuiz() {
+        let currentTopic = "";
+
+        quizData.forEach((item, index) => {
+            // Se mudou o tópico, adiciona cabeçalho
+            if (item.topic !== currentTopic) {
+                const topicHeader = document.createElement('div');
+                topicHeader.className = 'topic-header';
+                topicHeader.innerText = item.topic;
+                container.appendChild(topicHeader);
+                currentTopic = item.topic;
             }
-        }
 
-        let message = "";
-        let color = "";
+            // Criar cartão da questão
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            
+            // Texto da questão
+            const qText = document.createElement('div');
+            qText.className = 'question-text';
+            qText.innerText = item.question;
+            card.appendChild(qText);
 
-        if (score === total) {
-            message = "Parabéns! Você acertou TUDO! 🏆";
-            color = "#27ae60";
-        } else if (score > total * 0.7) {
-            message = `Muito bom! Você acertou ${score} de ${total}. Continue assim! 🌟`;
-            color = "#2980b9";
-        } else {
-            message = `Você acertou ${score} de ${total}. Vamos estudar mais um pouquinho? 💪`;
-            color = "#e67e22";
-        }
+            // Container das opções
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options-grid';
 
-        resultDiv.innerHTML = message;
-        resultDiv.style.color = color;
-        resultDiv.style.backgroundColor = "#fdfefe";
-        resultDiv.style.border = `2px solid ${color}`;
+            item.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                
+                // Lógica do clique (Instantâneo)
+                btn.onclick = () => checkAnswer(btn, i, item.correct, item.explanation, card);
+                
+                optionsDiv.appendChild(btn);
+            });
 
-        // Rolar até o resultado
-        resultDiv.scrollIntoView({ behavior: 'smooth' });
+            card.appendChild(optionsDiv);
+
+            // Caixa de Explicação (inicialmente oculta)
+            const explBox = document.createElement('div');
+            explBox.className = 'explanation-box';
+            explBox.innerHTML = `<strong>Explicação:</strong> ${item.explanation}`;
+            card.appendChild(explBox);
+
+            container.appendChild(card);
+        });
     }
+
+    // Função que verifica a resposta
+    function checkAnswer(clickedBtn, selectedIndex, correctIndex, explanation, cardElement) {
+        // Bloquear todos os botões desta questão para não responder de novo
+        const buttons = cardElement.querySelectorAll('.option-btn');
+        buttons.forEach(btn => btn.disabled = true);
+
+        // Mostrar explicação
+        const explBox = cardElement.querySelector('.explanation-box');
+        explBox.style.display = 'block';
+
+        // Verificar acerto
+        if (selectedIndex === correctIndex) {
+            clickedBtn.classList.add('correct');
+            score++;
+        } else {
+            clickedBtn.classList.add('wrong');
+            // Mostrar qual era a certa
+            buttons[correctIndex].classList.add('correct');
+        }
+
+        // Atualizar placar
+        scoreDisplay.innerText = `Acertos: ${score} / ${quizData.length}`;
+    }
+
+    // Iniciar
+    renderQuiz();
+
 </script>
 
 </body>
