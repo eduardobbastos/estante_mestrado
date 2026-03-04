@@ -11,7 +11,7 @@ Uma solução elegante e dinâmica para organização de conteúdos acadêmicos,
   - **Compartilhamento**: Envio rápido de detalhes da aula para colegas.
   - **Calendário**: Salve prazos e aulas diretamente na agenda (arquivo `.ics`).
 - **Área de Avaliação**: Footer dedicado e discreto para critérios de nota.
-- **Configuração Simples**: Gerencie tudo pelo arquivo `.env` sem mexer no código.
+- **Configuração Simples**: Gerencie tudo pelo arquivo `` sem mexer no código.
 
 ---
 
@@ -29,8 +29,8 @@ Sua planilha deve ter 3 abas principais com as colunas certas:
 
 **IMPORTANTE**: No Google Sheets, vá em `Arquivo > Compartilhar > Publicar na Web`. Escolha `Documento Inteiro` e `Valores separados por vírgulas (.csv)`. Copie o ID da planilha (o código longo na URL entre `/d/` e `/edit`).
 
-### 2. Configurar o Projeto (`.env`)
-Abra o arquivo [`.env`](./.env) na raiz do projeto e cole os dados:
+### 2. Configurar o Projeto (``)
+Abra o arquivo [``](./) na raiz do projeto e cole os dados:
 
 ```env
 SHEET_ID=seu_id_da_planilha_aqui

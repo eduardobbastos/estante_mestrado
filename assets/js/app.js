@@ -1,6 +1,6 @@
 /**
  * Estante Virtual - Motor de Conteúdo Dinâmico
- * Versão: 3.0.0 (Com suporte a .env)
+ * Versão: 3.1.0 
  */
 
 class EstanteMotor {
@@ -31,13 +31,14 @@ class EstanteMotor {
             }
         } catch (error) {
             console.error('Falha ao inicializar motor:', error);
-            this.container.innerHTML = `<p class="error">Erro ao carregar dados. Verifique a conexão e o arquivo .env.</p>`;
+            this.container.innerHTML = `<p class="error">Erro ao carregar dados. Verifique a conexão e o arquivo config.env.</p>`;
         }
     }
 
     async loadEnv() {
-        // Busca o arquivo .env na raiz do projeto
-        const response = await fetch('./.env');
+        // Busca o arquivo config.env na raiz do projeto
+        // GitHub Pages não serve arquivos que começam com ponto (ex: .env)
+        const response = await fetch('./config.env');
         const text = await response.text();
 
         const lines = text.split('\n');

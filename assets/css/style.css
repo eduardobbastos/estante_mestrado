@@ -388,6 +388,16 @@ h3 {
     font-size: 0.85rem;
 }
 
+.main-footer a {
+    color: var(--white);
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.main-footer a:hover {
+    color: var(--primary-color);
+}
+
 @media (max-width: 768px) {
     .header-content {
         flex-direction: column;
