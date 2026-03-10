@@ -4,14 +4,14 @@ Uma solução elegante e dinâmica para organização de conteúdos acadêmicos,
 
 ## 🚀 Funcionalidades
 
-- **Motor Dinâmico**: Carrega dados em tempo real do Google Sheets.
+- **Motor Dinâmico Modular**: Arquitetura baseada em módulos nativos (ES6 Modules).
 - **Visual Premium**: Design moderno baseado na identidade visual da Afya (Magenta/Deep Blue).
 - **Cards Interativos**:
   - **"Leia Mais"**: Expansão inteligente para descrições longas.
   - **Compartilhamento**: Envio rápido de detalhes da aula para colegas.
   - **Calendário**: Salve prazos e aulas diretamente na agenda (arquivo `.ics`).
 - **Área de Avaliação**: Footer dedicado e discreto para critérios de nota.
-- **Configuração Simples**: Gerencie tudo pelo arquivo `` sem mexer no código.
+- **Configuração Simples**: Gerencie tudo pelo arquivo `config.env` sem mexer no código.
 
 ---
 
@@ -27,10 +27,10 @@ Sua planilha deve ter 3 abas principais com as colunas certas:
 - **Aba `Avaliação`**:
   - `Disciplina`, `Descrição dos Critérios`, `Peso`, `Data limite de entrega`, `Observação`.
 
-**IMPORTANTE**: No Google Sheets, vá em `Arquivo > Compartilhar > Publicar na Web`. Escolha `Documento Inteiro` e `Valores separados por vírgulas (.csv)`. Copie o ID da planilha (o código longo na URL entre `/d/` e `/edit`).
+**IMPORTANTE**: No Google Sheets, vá em `Arquivo > Compartilhar > Publicar na Web`. Escolha `Documento Inteiro` e `Valores separados por vírgulas (.csv)`. Copie o ID da planilha.
 
-### 2. Configurar o Projeto (``)
-Abra o arquivo [``](./) na raiz do projeto e cole os dados:
+### 2. Configurar o Projeto (`config.env`)
+Abra o arquivo [`config.env`](./config.env) na raiz do projeto e cole os dados:
 
 ```env
 SHEET_ID=seu_id_da_planilha_aqui
@@ -39,12 +39,15 @@ TAB_CRONOGRAMA=Cronograma
 TAB_AVALIACAO=Avaliação
 ```
 
-### 3. Estrutura de Arquivos
-O projeto segue uma organização profissional:
-- `/assets/js/app.js`: Lógica do motor.
-- `/assets/css/style.css`: Estilos e design.
-- `/docs/skill.md`: Visão e regras do projeto.
-- `index.html`: Página principal.
+### 3. Estrutura de Arquivos Modular
+O projeto utiliza uma arquitetura baseada em **Design Patterns**:
+- `index.html`: Ponto de entrada principal.
+- `config.env`: Arquivo de configuração.
+- `assets/js/main.js`: Orquestrador da aplicação.
+- `assets/js/modules/Config.js`: Gerenciador de ambiente.
+- `assets/js/modules/DataService.js`: Serviço de dados (Sheets).
+- `assets/js/modules/UIComponents.js`: Fábrica de interface.
+- `assets/js/modules/Utils.js`: Utilitários (Share/Calendar).
 
 ---
 
@@ -74,8 +77,7 @@ Esta obra está licenciada sob uma [Licença Creative Commons Atribuição-NãoC
 ---
 
 ## 📝 Notas de Versão
+- **v3.3.0**: Refatoração completa para arquitetura modular (ES6 Modules).
 - **v3.2.0**: Alteração da licença para Creative Commons BY-NC 4.0.
 - **v3.1.0**: Atualização de créditos e inclusão do núcleo NELPED.
 - **v3.0.0**: Migração para estrutura de pastas profissional e configuração via `.env`.
-- **v2.2.0**: Implementação de compartilhamento seletivo e correção de sintaxe.
-- **v2.1.0**: Adição de botões de calendário e compartilhamento nativo.
