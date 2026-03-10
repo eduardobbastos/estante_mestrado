@@ -23,7 +23,7 @@ Sua planilha deve ter 3 abas principais com as colunas certas:
 - **Aba `DadosDisciplina`**:
   - `Disciplina`, `Professora 1`, `Contato Professora 1`, `Professora 2` (opcional), `Contato Professora 2` (opcional), `Horário`, `Dia da Semana`.
 - **Aba `Cronograma`**:
-  - `Disciplina`, `Data aula`, `Descrição Conteúdo`, `Link do Conteúdo`, `Obsevação`.
+  - `Disciplina`, `Data aula`, `Descrição Conteúdo`, `Link do Conteúdo`, `Link do AudioBook`, `Obsevação`.
 - **Aba `Avaliação`**:
   - `Disciplina`, `Descrição dos Critérios`, `Peso`, `Data limite de entrega`, `Observação`.
 

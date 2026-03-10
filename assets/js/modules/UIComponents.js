@@ -70,6 +70,7 @@ export class UIComponents {
                 discipline: disc.Disciplina,
                 details: [{ label: 'Obs', value: item['Obsevação'] }],
                 link: item['Link do Conteúdo'],
+                audioLink: item['Link do AudioBook'],
                 icon: 'book-open',
                 showShare: true,
                 calendarEvent: item['Data aula'] ? {
@@ -139,11 +140,16 @@ export class UIComponents {
             ? `<button class="card-icon share-icon" title="Compartilhar"><i data-lucide="share-2"></i></button>`
             : '';
 
+        const audioHtml = config.audioLink
+            ? `<a href="${config.audioLink}" target="_blank" class="card-icon audio-icon" title="Ouvir AudioBook"><i data-lucide="headphones"></i></a>`
+            : '';
+
         card.innerHTML = `
             <div class="card-header">
                 <span class="card-tag">${config.tag}</span>
                 <div class="card-actions">
                     ${calendarHtml}
+                    ${audioHtml}
                     ${shareHtml}
                     ${actionHtml}
                 </div>

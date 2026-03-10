@@ -19,7 +19,7 @@ export class Utils {
             .map(d => `${d.label}: ${d.value}`)
             .join('\n');
 
-        const shareText = `📌 *${config.discipline}*\n\n🔹 *${config.tag}*\n📝 ${config.title}\n\n${detailsText ? `ℹ️ *Detalhes:*\n${detailsText}\n` : ''}\n🔗 Link: ${config.link || window.location.href}`;
+        const shareText = `📌 *${config.discipline}*\n\n🔹 *${config.tag}*\n📝 ${config.title}\n\n${detailsText ? `ℹ️ *Detalhes:*\n${detailsText}\n` : ''}${config.audioLink ? `🎧 *AudioBook:* ${config.audioLink}\n` : ''}\n🔗 Conteúdo: ${config.link || window.location.href}`;
 
         try {
             if (navigator.share) {
