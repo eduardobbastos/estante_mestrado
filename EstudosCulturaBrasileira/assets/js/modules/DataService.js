@@ -9,14 +9,16 @@ export class DataService {
     }
 
     async fetchAll() {
-        const [acervo, conteudo] = await Promise.all([
-            this._fetchCSV(this.config.tabs.acervo),
-            this._fetchCSV(this.config.tabs.conteudo)
+        const [disciplinas, cronograma, avaliacoes] = await Promise.all([
+            this._fetchCSV(this.config.tabs.disciplina),
+            this._fetchCSV(this.config.tabs.cronograma),
+            this._fetchCSV(this.config.tabs.avaliacao)
         ]);
 
         return {
-            acervo,
-            conteudo
+            disciplinas,
+            cronograma,
+            avaliacoes
         };
     }
 
@@ -24,7 +26,7 @@ export class DataService {
         const url = `https://docs.google.com/spreadsheets/d/${this.config.sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}&t=${Date.now()}`;
         const response = await fetch(url);
         if (!response.ok) throw new Error(`Erro ao buscar aba: ${sheetName}`);
-
+        
         const text = await response.text();
         return this._parseCSV(text);
     }
@@ -32,9 +34,9 @@ export class DataService {
     _parseCSV(csvText) {
         const lines = csvText.split('\n');
         if (lines.length < 1) return [];
-
+        
         const headers = this._parseLine(lines[0]);
-
+        
         return lines.slice(1).map(line => {
             const values = this._parseLine(line);
             const obj = {};
@@ -51,7 +53,7 @@ export class DataService {
         const result = [];
         let current = '';
         let inQuotes = false;
-
+        
         for (let i = 0; i < line.length; i++) {
             const char = line[i];
             if (char === '"') {
