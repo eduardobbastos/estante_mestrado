@@ -20,12 +20,10 @@ Uma solução elegante e dinâmica para organização de conteúdos acadêmicos,
 ### 1. Preparar a Planilha do Google
 Sua planilha deve ter 3 abas principais com as colunas certas:
 
-- **Aba `DadosDisciplina`**:
-  - `Disciplina`, `Professora 1`, `Contato Professora 1`, `Professora 2` (opcional), `Contato Professora 2` (opcional), `Horário`, `Dia da Semana`.
-- **Aba `Cronograma`**:
-  - `Disciplina`, `Data aula`, `Descrição Conteúdo`, `Link do Conteúdo`, `Link do AudioBook`, `Obsevação`.
-- **Aba `Avaliação`**:
-  - `Disciplina`, `Descrição dos Critérios`, `Peso`, `Data limite de entrega`, `Observação`.
+- **Aba `DadosDoAcervo`**:
+  - `Tipo de Literatura`, `Objetivo`.
+- **Aba `ConteudoEstante`**:
+  - `Tipo de Literatura`, `Título`, `Autor`, `Ano`, `Categoria`, `Link`, `Link AudioBook`, `Lido`.
 
 **IMPORTANTE**: No Google Sheets, vá em `Arquivo > Compartilhar > Publicar na Web`. Escolha `Documento Inteiro` e `Valores separados por vírgulas (.csv)`. Copie o ID da planilha.
 
@@ -34,9 +32,8 @@ Abra o arquivo [`config.env`](./config.env) na raiz do projeto e cole os dados:
 
 ```env
 SHEET_ID=seu_id_da_planilha_aqui
-TAB_DISCIPLINA=DadosDisciplina
-TAB_CRONOGRAMA=Cronograma
-TAB_AVALIACAO=Avaliação
+TAB_ACERVO=DadosDoAcervo
+TAB_CONTEUDO=ConteudoEstante
 ```
 
 ### 3. Estrutura de Arquivos Modular

@@ -7,9 +7,8 @@ export class Config {
     constructor() {
         this.sheetId = '';
         this.tabs = {
-            disciplina: '',
-            cronograma: '',
-            avaliacao: ''
+            acervo: '',
+            conteudo: ''
         };
     }
 
@@ -18,14 +17,13 @@ export class Config {
             // Em deploy no GitHub Pages, usamos config.env
             const response = await fetch('./config.env');
             if (!response.ok) throw new Error('Arquivo config.env não encontrado');
-            
+
             const text = await response.text();
             const env = this._parseEnv(text);
 
             this.sheetId = env.SHEET_ID;
-            this.tabs.disciplina = env.TAB_DISCIPLINA;
-            this.tabs.cronograma = env.TAB_CRONOGRAMA;
-            this.tabs.avaliacao = env.TAB_AVALIACAO;
+            this.tabs.acervo = env.TAB_ACERVO;
+            this.tabs.conteudo = env.TAB_CONTEUDO;
 
             return this;
         } catch (error) {
