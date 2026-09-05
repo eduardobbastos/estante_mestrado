@@ -23,12 +23,20 @@ export class DataService {
     }
 
     async _fetchCSV(sheetName) {
+        if (!sheetName) return [];
         const url = `https://docs.google.com/spreadsheets/d/${this.config.sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}&t=${Date.now()}`;
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`Erro ao buscar aba: ${sheetName}`);
-        
-        const text = await response.text();
-        return this._parseCSV(text);
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                console.warn(`Aba não encontrada ou inacessível: ${sheetName}`);
+                return [];
+            }
+            const text = await response.text();
+            return this._parseCSV(text);
+        } catch (error) {
+            console.warn(`Erro ao buscar aba ${sheetName}:`, error);
+            return [];
+        }
     }
 
     _parseCSV(csvText) {
