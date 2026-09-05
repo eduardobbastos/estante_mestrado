@@ -87,9 +87,9 @@ export class UIComponents {
                 title: item['Descrição Conteúdo'] || 'Sem Título',
                 link: item['Link do Conteúdo'] && item['Link do Conteúdo'].startsWith('http') ? item['Link do Conteúdo'] : '',
                 audioLink: item['Link do AudioBook'] && item['Link do AudioBook'].startsWith('http') ? item['Link do AudioBook'] : ''
-            })).filter(item => item.title !== 'Sem Título');
+            })).filter(item => item.title !== 'Sem Título' && !/^Aula do dia\s+\d{2}\/\d{2}\/\d{4}$/i.test(item.title));
 
-            const mainTitle = lessonItems[0]?.title || 'Sem Título';
+            const mainTitle = lessonItems[0]?.title || `Aula do dia ${date}`;
 
             const card = this.createCard({
                 type: 'lesson',
