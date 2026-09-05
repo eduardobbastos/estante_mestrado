@@ -175,9 +175,14 @@ export class UIComponents {
         const hasMultipleLessons = config.lessonItems && config.lessonItems.length > 1;
         const mainTitle = this._formatTitleWithSubtitle(config.title);
 
-        const secondFloorHtml = hasMultipleLessons
+        const secondFloorItems = hasMultipleLessons
+            ? config.lessonItems.filter((item, i) => item.title !== config.title)
+            : [];
+        const hasSecondFloor = secondFloorItems.length > 0;
+
+        const secondFloorHtml = hasSecondFloor
             ? `<div class="card-second-floor">
-                ${config.lessonItems.map((item, i) => {
+                ${secondFloorItems.map((item, i) => {
                     const itemTitle = this._formatTitleWithSubtitle(item.title);
                     return `
                     <div class="lesson-item">
@@ -195,9 +200,9 @@ export class UIComponents {
                </div>`
             : '';
 
-        const mainActionHtml = !hasMultipleLessons && config.lessonItems?.[0]?.link
+        const mainActionHtml = !hasSecondFloor && config.lessonItems?.[0]?.link
             ? `<a href="${config.lessonItems[0].link}" target="_blank" class="card-icon" title="Acessar Conteúdo"><i data-lucide="external-link"></i></a>`
-            : (!hasMultipleLessons && config.lessonItems?.[0]?.audioLink
+            : (!hasSecondFloor && config.lessonItems?.[0]?.audioLink
                 ? `<a href="${config.lessonItems[0].audioLink}" target="_blank" class="card-icon audio-icon" title="Ouvir AudioBook"><i data-lucide="headphones"></i></a>`
                 : `<div class="card-icon"><i data-lucide="${config.icon}"></i></div>`);
 
