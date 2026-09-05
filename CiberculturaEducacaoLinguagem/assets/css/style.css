@@ -304,9 +304,18 @@ h3 {
 }
 
 .lesson-item-title {
-    font-size: 0.9rem;
-    line-height: 1.5;
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--text-muted);
+    margin-bottom: 0.2rem;
+}
+
+.lesson-item-subtitle {
+    font-size: 0.85rem;
     color: var(--text-dark);
+    font-weight: 500;
+    margin-bottom: 0;
 }
 
 .action-btn {
