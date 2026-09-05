@@ -58,25 +58,42 @@ export class UIComponents {
         const lessonGrid = section.querySelector(`#lesson-grid-${discSlug}`);
         const evalGrid = section.querySelector(`#eval-footer-${discSlug} .cards-grid`);
 
-        // Render Lessons
-        const lessons = cronograma.filter(c => 
-            c.Disciplina.toLowerCase().trim() === disc.Disciplina.toLowerCase().trim()
-        );
-        lessons.forEach(item => {
+        // Render Lessons — agrupa por data para juntar aulas multi-linha
+        const lessonsByDate = new Map();
+        cronograma
+            .filter(c => c.Disciplina.toLowerCase().trim() === disc.Disciplina.toLowerCase().trim())
+            .forEach(item => {
+                const date = item['Data aula'] || 'Sem data';
+                if (!lessonsByDate.has(date)) {
+                    lessonsByDate.set(date, []);
+                }
+                lessonsByDate.get(date).push(item);
+            });
+
+        lessonsByDate.forEach(group => {
+            const first = group[0];
+            const date = first['Data aula'];
+            const title = group.map(item => item['Descrição Conteúdo']).filter(Boolean).join('<br><br>');
+            const obs = group.map(item => item['Obsevação']).filter(Boolean).join(' / ');
+            const links = group.map(item => item['Link do Conteúdo']).filter(l => l && l.startsWith('http'));
+            const audioLinks = group.map(item => item['Link do AudioBook']).filter(l => l && l.startsWith('http'));
+
             const card = this.createCard({
                 type: 'lesson',
-                tag: `Aula • ${item['Data aula']}`,
-                title: item['Descrição Conteúdo'],
+                tag: `Aula • ${date}`,
+                title,
                 discipline: disc.Disciplina,
-                details: [{ label: 'Obs', value: item['Obsevação'] }],
-                link: item['Link do Conteúdo'],
-                audioLink: item['Link do AudioBook'],
+                details: obs ? [{ label: 'Obs', value: obs }] : [],
+                link: links.length > 0 ? links[0] : '',
+                allLinks: links,
+                audioLink: audioLinks.length > 0 ? audioLinks[0] : '',
+                allAudioLinks: audioLinks,
                 icon: 'book-open',
                 showShare: true,
-                calendarEvent: item['Data aula'] ? {
-                    title: `Aula: ${item['Descrição Conteúdo']}`,
-                    description: `Disciplina: ${disc.Disciplina}\nObservação: ${item['Obsevação']}`,
-                    date: item['Data aula']
+                calendarEvent: date ? {
+                    title: `Aula: ${first['Descrição Conteúdo']}`,
+                    description: `Disciplina: ${disc.Disciplina}\nObservação: ${obs}`,
+                    date
                 } : null
             });
             lessonGrid.appendChild(card);
@@ -129,7 +146,7 @@ export class UIComponents {
             `).join('');
 
         const actionHtml = (config.link && config.link.startsWith('http')) 
-            ? `<a href="${config.link}" target="_blank" class="card-icon" title="Acessar Conteúdo"><i data-lucide="external-link"></i></a>`
+            ? `<div class="card-actions-links">${(config.allLinks || [config.link]).map((l, i) => `<a href="${l}" target="_blank" class="card-icon" title="Acessar Conteúdo ${i + 1}"><i data-lucide="external-link"></i></a>`).join('')}</div>`
             : `<div class="card-icon"><i data-lucide="${config.icon}"></i></div>`;
 
         const calendarHtml = config.calendarEvent 
@@ -141,7 +158,7 @@ export class UIComponents {
             : '';
 
         const audioHtml = config.audioLink
-            ? `<a href="${config.audioLink}" target="_blank" class="card-icon audio-icon" title="Ouvir AudioBook"><i data-lucide="headphones"></i></a>`
+            ? `<div class="card-actions-links">${(config.allAudioLinks || [config.audioLink]).map((l, i) => `<a href="${l}" target="_blank" class="card-icon audio-icon" title="Ouvir AudioBook ${i + 1}"><i data-lucide="headphones"></i></a>`).join('')}</div>`
             : '';
 
         card.innerHTML = `
