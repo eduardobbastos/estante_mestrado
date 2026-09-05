@@ -142,6 +142,15 @@ export class UIComponents {
         return section;
     }
 
+    _formatTitleWithSubtitle(title) {
+        if (!title) return { main: 'Sem Título', sub: '' };
+        const parts = title.split('|').map(p => p.trim());
+        if (parts.length > 1) {
+            return { main: parts[0], sub: parts.slice(1).join(' | ') };
+        }
+        return { main: title, sub: '' };
+    }
+
     createCard(config) {
         const card = document.createElement('div');
         card.className = `card ${config.type}-card`;
@@ -164,10 +173,13 @@ export class UIComponents {
             : '';
 
         const hasMultipleLessons = config.lessonItems && config.lessonItems.length > 1;
+        const mainTitle = this._formatTitleWithSubtitle(config.title);
 
         const secondFloorHtml = hasMultipleLessons
             ? `<div class="card-second-floor">
-                ${config.lessonItems.map((item, i) => `
+                ${config.lessonItems.map((item, i) => {
+                    const itemTitle = this._formatTitleWithSubtitle(item.title);
+                    return `
                     <div class="lesson-item">
                         <div class="lesson-item-header">
                             <span class="lesson-number">${i + 1}</span>
@@ -176,9 +188,10 @@ export class UIComponents {
                                 ${item.link ? `<a href="${item.link}" target="_blank" class="card-icon" title="Acessar Conteúdo"><i data-lucide="external-link"></i></a>` : ''}
                             </div>
                         </div>
-                        <div class="lesson-item-title">${item.title}</div>
-                    </div>
-                `).join('')}
+                        <div class="lesson-item-title">${itemTitle.main}</div>
+                        ${itemTitle.sub ? `<div class="lesson-item-subtitle">${itemTitle.sub}</div>` : ''}
+                    </div>`;
+                }).join('')}
                </div>`
             : '';
 
@@ -197,7 +210,8 @@ export class UIComponents {
                     ${mainActionHtml}
                 </div>
             </div>
-            <div class="card-title">${config.title}</div>
+            <div class="card-title">${mainTitle.main}</div>
+            ${mainTitle.sub ? `<div class="card-subtitle">${mainTitle.sub}</div>` : ''}
             <div class="card-details">
                 ${detailsHtml}
             </div>
