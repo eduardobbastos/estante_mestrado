@@ -1,15 +1,17 @@
 :root {
-    --primary-color: #e30052;
-    /* Afya Magenta */
-    --secondary-color: #003399;
-    /* Deep Blue */
-    --bg-gradient: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    --text-dark: #212529;
-    --text-muted: #6c757d;
-    --white: #ffffff;
+    --primary-color: #111827;
+    /* Dark header */
+    --secondary-color: #0D9488;
+    /* Teal accent */
+    --accent-blue: #1E40AF;
+    --accent-blue-light: #3B82F6;
+    --bg-gradient: #F8FAFC;
+    --text-dark: #1E293B;
+    --text-muted: #64748B;
+    --white: #FFFFFF;
     --glass-bg: rgba(255, 255, 255, 0.8);
-    --glass-border: rgba(255, 255, 255, 0.3);
-    --shadow-premium: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --glass-border: rgba(226, 232, 240, 0.6);
+    --shadow-premium: 0 10px 30px rgba(0, 0, 0, 0.06);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -37,18 +39,19 @@ h3 {
 
 /* Header */
 .main-header {
-    background: var(--white);
+    background: var(--primary-color);
     padding: 2rem 1rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    border-bottom: 4px solid var(--primary-color);
+    text-align: center;
+    border-bottom: 4px solid var(--secondary-color);
 }
 
 .header-content {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
 }
 
 .logo {
@@ -57,12 +60,12 @@ h3 {
 
 .header-text h1 {
     font-size: 2.5rem;
-    color: var(--secondary-color);
+    color: #fff;
     font-weight: 700;
 }
 
 .header-text p {
-    color: var(--text-muted);
+    color: #cbd5e1;
     font-weight: 300;
 }
 
@@ -94,7 +97,7 @@ h3 {
     content: '';
     display: block;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(0, 51, 153, 0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(13, 148, 136, 0.25), transparent);
     margin: 5rem 0;
 }
 
@@ -103,12 +106,12 @@ h3 {
     flex-direction: column;
     margin-bottom: 2rem;
     padding-left: 1rem;
-    border-left: 5px solid var(--primary-color);
+    border-left: 5px solid var(--accent-blue);
 }
 
 .discipline-header h2 {
     font-size: 2rem;
-    color: var(--secondary-color);
+    color: var(--accent-blue);
     margin-bottom: 0.5rem;
 }
 
@@ -118,7 +121,7 @@ h3 {
     flex-wrap: wrap;
     color: var(--text-muted);
     font-size: 0.95rem;
-    background: rgba(227, 0, 82, 0.05);
+    background: rgba(13, 148, 136, 0.06);
     padding: 1rem;
     border-radius: 12px;
 }
@@ -130,7 +133,7 @@ h3 {
 }
 
 .info-item b {
-    color: var(--secondary-color);
+    color: var(--accent-blue);
 }
 
 .info-item a {
@@ -140,7 +143,7 @@ h3 {
 }
 
 .info-item a:hover {
-    color: var(--primary-color);
+    color: var(--accent-blue);
 }
 
 /* Cards Grid */
@@ -183,11 +186,11 @@ h3 {
     left: 0;
     width: 6px;
     height: 100%;
-    background: var(--secondary-color);
+    background: var(--accent-blue);
 }
 
 .card.evaluation-card::before {
-    background: var(--primary-color);
+    background: var(--accent-blue);
 }
 
 .card-header {
@@ -211,15 +214,15 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 51, 153, 0.1);
+    background: rgba(13, 148, 136, 0.12);
     border-radius: 8px;
-    color: var(--secondary-color);
+    color: var(--accent-blue);
     transition: var(--transition-smooth);
 }
 
 .card.evaluation-card .card-icon {
-    background: rgba(227, 0, 82, 0.1);
-    color: var(--primary-color);
+    background: rgba(13, 148, 136, 0.1);
+    color: var(--accent-blue);
 }
 
 .card-icon:hover {
@@ -240,14 +243,14 @@ h3 {
 .card-second-floor {
     margin-top: 1rem;
     padding-top: 1rem;
-    border-top: 1px dashed rgba(0, 51, 153, 0.15);
+    border-top: 1px dashed rgba(13, 148, 136, 0.2);
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
 }
 
 .lesson-item {
-    background: rgba(0, 51, 153, 0.03);
+    background: rgba(13, 148, 136, 0.05);
     border-radius: 12px;
     padding: 0.75rem;
 }
@@ -265,7 +268,7 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--secondary-color);
+    background: var(--accent-blue);
     color: white;
     border-radius: 50%;
     font-size: 0.75rem;
@@ -309,16 +312,16 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 51, 153, 0.05);
-    border: 1px solid rgba(0, 51, 153, 0.1);
+    background: rgba(13, 148, 136, 0.06);
+    border: 1px solid rgba(13, 148, 136, 0.12);
     border-radius: 6px;
-    color: var(--secondary-color);
+    color: var(--accent-blue);
     cursor: pointer;
     transition: var(--transition-smooth);
 }
 
 .action-btn:hover {
-    background: var(--secondary-color);
+    background: var(--accent-blue);
     color: white;
 }
 
@@ -348,7 +351,7 @@ h3 {
 .read-more-btn {
     background: none;
     border: none;
-    color: var(--primary-color);
+    color: var(--accent-blue);
     font-size: 0.8rem;
     font-weight: 600;
     padding: 0.5rem 0;
@@ -396,10 +399,10 @@ h3 {
 
 /* Evaluation Footer Section */
 .evaluation-footer {
-    background: rgba(0, 51, 153, 0.02);
+    background: rgba(13, 148, 136, 0.04);
     border-radius: 20px;
     padding: 1.5rem;
-    border: 1px dashed rgba(0, 51, 153, 0.15);
+    border: 1px dashed rgba(13, 148, 136, 0.2);
 }
 
 .evaluation-footer .cards-grid {
@@ -416,7 +419,7 @@ h3 {
 }
 
 .evaluation-footer-header h3 {
-    color: var(--secondary-color);
+    color: var(--accent-blue);
     font-size: 1.5rem;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -425,7 +428,7 @@ h3 {
 .evaluation-footer-header .divider {
     flex: 1;
     height: 1px;
-    background: rgba(0, 51, 153, 0.1);
+    background: rgba(13, 148, 136, 0.12);
 }
 
 /* Loader */
@@ -438,7 +441,7 @@ h3 {
     width: 50px;
     height: 50px;
     border: 5px solid #ddd;
-    border-top: 5px solid var(--primary-color);
+    border-top: 5px solid var(--accent-blue);
     border-radius: 50%;
     display: inline-block;
     animation: spin 1s linear infinite;
@@ -458,7 +461,7 @@ h3 {
 /* Footer */
 .main-footer {
     padding: 2rem;
-    background: var(--secondary-color);
+    background: var(--accent-blue);
     color: rgba(255, 255, 255, 0.7);
     text-align: center;
     font-size: 0.85rem;
@@ -471,7 +474,7 @@ h3 {
 }
 
 .main-footer a:hover {
-    color: var(--primary-color);
+    color: var(--secondary-color);
 }
 
 @media (max-width: 768px) {
