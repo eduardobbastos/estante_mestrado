@@ -1,49 +1,106 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estante Virtual | PPGHCA - Unigranrio Afya</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Estante Mestrado | PPGHCA - Unigranrio Afya</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --color-dark-blue: #111827;
+            --color-blue-600: #1E40AF;
+            --color-blue-500: #3B82F6;
+            --color-blue-400: #60A5FA;
+            --color-accent: #0D9488;
+            --color-accent-light: #14B8A6;
+            --color-bg: #F8FAFC;
+            --color-card: #FFFFFF;
+            --color-text: #1E293B;
+            --color-muted: #64748B;
+            --color-border: #E2E8F0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background: var(--color-dark-blue);
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 4px solid var(--color-accent);
+        }
+        .header img { max-width: 220px; margin-bottom: 1rem; }
+        .header h1 { font-family: 'Outfit', sans-serif; font-size: 2rem; color: #fff; margin-bottom: .5rem; }
+        .header p { color: #cbd5e1; font-size: 1rem; }
+        .main { flex: 1; max-width: 960px; margin: 0 auto; width: 100%; padding: 3rem 1rem; }
+        .subtitle { text-align: center; margin-bottom: 2.5rem; color: var(--color-muted); font-size: 1.1rem; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .card {
+            background: var(--color-card);
+            border: 1px solid var(--color-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-decoration: none;
+            color: inherit;
+            transition: transform .2s ease, box-shadow .2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,.08); border-color: var(--color-blue-400); }
+        .card-icon { color: var(--color-accent); margin-bottom: 1rem; }
+        .card h2 { font-family: 'Outfit', sans-serif; font-size: 1.3rem; margin-bottom: .5rem; }
+        .card p { color: var(--color-muted); font-size: .95rem; line-height: 1.5; flex: 1; }
+        .card .arrow { margin-top: 1rem; display: inline-flex; align-items: center; gap: .4rem; font-weight: 600; font-size: .9rem; color: var(--color-blue-600); }
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            font-size: .85rem;
+            color: var(--color-muted);
+            border-top: 1px solid var(--color-border);
+        }
+        .footer a { color: var(--color-blue-600); text-decoration: none; }
+    </style>
 </head>
-
 <body>
-    <header class="main-header">
-        <div class="header-content">
-            <img src="https://cdn.prod.website-files.com/67224e6757c4ad50202aa273/688d0c0dc20c13ce880bdf71_logo-afya-universidade-unigranrio-400px-97px.png"
-                alt="Unigranrio Afya Logo" class="logo">
-            <div class="header-text">
-                <h1>Estante Virtual</h1>
-                <p>Programa de Pós-Graduação em Humanidades, Culturas e Artes</p>
-            </div>
-        </div>
+    <header class="header">
+        <img src="https://cdn.prod.website-files.com/67224e6757c4ad50202aa273/688d0c0dc20c13ce880bdf71_logo-afya-universidade-unigranrio-400px-97px.png"
+             alt="Unigranrio Afya Logo">
+        <h1>Estante Virtual</h1>
+        <p>Programa de Pós-Graduação em Humanidades, Culturas e Artes</p>
     </header>
 
-    <main class="container">
-        <section id="shelf-motor" class="shelf-container">
-            <!-- Os cards e disciplinas serão carregados aqui dinamicamente -->
-            <div class="loading">Carregando conteúdos acadêmicos...</div>
-        </section>
+    <main class="main">
+        <p class="subtitle">Selecione uma disciplina para acessar os conteúdos acadêmicos:</p>
+        <div class="cards">
+            <a href="./EstudosCulturaBrasileira/" class="card">
+                <div class="card-icon"><i data-lucide="book-open" style="width:32px;height:32px;"></i></div>
+                <h2>Estudos de Cultura Brasileira</h2>
+                <p>Acesse o acervo de conteúdos, leituras e materiais da disciplina de Estudos de Cultura Brasileira.</p>
+                <span class="arrow">Acessar <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></span>
+            </a>
+            <a href="./MetodologiaPesquisa/" class="card">
+                <div class="card-icon"><i data-lucide="flask-conical" style="width:32px;height:32px;"></i></div>
+                <h2>Metodologia da Pesquisa</h2>
+                <p>Acesse o acervo de conteúdos, leituras e materiais da disciplina de Metodologia da Pesquisa.</p>
+                <span class="arrow">Acessar <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></span>
+            </a>
+        </div>
     </main>
 
-    <footer class="main-footer">
-        <div class="footer-content">
-            <p><strong>Núcleo de Estudos em Linguagens, Práticas Educacionais e Cultura Digital - NELPED</strong></p>
-            <p>Mestrado PPGHCA - Unigranrio Afya</p>
-            <p>Desenvolvido por: <a href="https://www.linkedin.com/in/eduardobbastos/" target="_blank">Eduardo
-                    Bastos</a></p>
-            <p class="copyright">&copy; 2026 Creative Commons Atribuição-NãoComercial 4.0 Internacional.</p>
-        </div>
+    <footer class="footer">
+        <p><strong>Núcleo de Estudos em Linguagens, Práticas Educacionais e Cultura Digital - NELPED</strong></p>
+        <p>Mestrado PPGHCA - Unigranrio Afya | Desenvolvido por <a href="https://www.linkedin.com/in/eduardobbastos/" target="_blank">Eduardo Bastos</a></p>
     </footer>
 
-    <script type="module" src="assets/js/main.js"></script>
+    <script>if(window.lucide) window.lucide.createIcons();</script>
 </body>
-
 </html>
