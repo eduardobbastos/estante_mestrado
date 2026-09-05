@@ -151,6 +151,13 @@ export class UIComponents {
         return { main: title, sub: '' };
     }
 
+    _getCommonMain(items) {
+        if (!items || items.length === 0) return null;
+        const firstMain = this._formatTitleWithSubtitle(items[0].title).main;
+        const allSame = items.every(item => this._formatTitleWithSubtitle(item.title).main === firstMain);
+        return allSame ? firstMain : null;
+    }
+
     createCard(config) {
         const card = document.createElement('div');
         card.className = `card ${config.type}-card`;
@@ -174,16 +181,16 @@ export class UIComponents {
 
         const hasMultipleLessons = config.lessonItems && config.lessonItems.length > 1;
         const mainTitle = this._formatTitleWithSubtitle(config.title);
+        const commonMain = hasMultipleLessons ? this._getCommonMain(config.lessonItems) : null;
 
-        const secondFloorItems = hasMultipleLessons
-            ? config.lessonItems.filter((item, i) => item.title !== config.title)
-            : [];
+        const secondFloorItems = hasMultipleLessons ? config.lessonItems : [];
         const hasSecondFloor = secondFloorItems.length > 0;
 
         const secondFloorHtml = hasSecondFloor
             ? `<div class="card-second-floor">
                 ${secondFloorItems.map((item, i) => {
                     const itemTitle = this._formatTitleWithSubtitle(item.title);
+                    const showItemTitle = !commonMain && itemTitle.main;
                     return `
                     <div class="lesson-item">
                         <div class="lesson-item-header">
@@ -193,18 +200,25 @@ export class UIComponents {
                                 ${item.link ? `<a href="${item.link}" target="_blank" class="card-icon" title="Acessar Conteúdo"><i data-lucide="external-link"></i></a>` : ''}
                             </div>
                         </div>
-                        <div class="lesson-item-title">${itemTitle.main}</div>
+                        ${showItemTitle ? `<div class="lesson-item-title">${itemTitle.main}</div>` : ''}
                         ${itemTitle.sub ? `<div class="lesson-item-subtitle">${itemTitle.sub}</div>` : ''}
                     </div>`;
                 }).join('')}
                </div>`
             : '';
 
-        const mainActionHtml = !hasSecondFloor && config.lessonItems?.[0]?.link
-            ? `<a href="${config.lessonItems[0].link}" target="_blank" class="card-icon" title="Acessar Conteúdo"><i data-lucide="external-link"></i></a>`
-            : (!hasSecondFloor && config.lessonItems?.[0]?.audioLink
-                ? `<a href="${config.lessonItems[0].audioLink}" target="_blank" class="card-icon audio-icon" title="Ouvir AudioBook"><i data-lucide="headphones"></i></a>`
-                : `<div class="card-icon"><i data-lucide="${config.icon}"></i></div>`);
+        const mainActionHtml = !hasSecondFloor
+            ? (config.lessonItems?.[0]?.link
+                ? `<a href="${config.lessonItems[0].link}" target="_blank" class="card-icon" title="Acessar Conteúdo"><i data-lucide="external-link"></i></a>`
+                : (config.lessonItems?.[0]?.audioLink
+                    ? `<a href="${config.lessonItems[0].audioLink}" target="_blank" class="card-icon audio-icon" title="Ouvir AudioBook"><i data-lucide="headphones"></i></a>`
+                    : `<div class="card-icon"><i data-lucide="${config.icon}"></i></div>`))
+            : '';
+
+        const titleAreaHtml = !hasSecondFloor
+            ? `<div class="card-title">${mainTitle.main}</div>
+               ${mainTitle.sub ? `<div class="card-subtitle">${mainTitle.sub}</div>` : ''}`
+            : '';
 
         card.innerHTML = `
             <div class="card-header">
@@ -215,8 +229,7 @@ export class UIComponents {
                     ${mainActionHtml}
                 </div>
             </div>
-            <div class="card-title">${mainTitle.main}</div>
-            ${mainTitle.sub ? `<div class="card-subtitle">${mainTitle.sub}</div>` : ''}
+            ${titleAreaHtml}
             <div class="card-details">
                 ${detailsHtml}
             </div>
