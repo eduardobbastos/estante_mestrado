@@ -144,9 +144,9 @@ export class UIComponents {
 
     _formatTitleWithSubtitle(title) {
         if (!title) return { main: 'Sem Título', sub: '' };
-        const parts = title.split('|').map(p => p.trim());
+        const parts = title.split('|').map(p => p.trim()).filter(p => p);
         if (parts.length > 1) {
-            return { main: parts[0], sub: parts.slice(1).join(' | ') };
+            return { main: parts[0], sub: parts.slice(1).join('<br>') };
         }
         return { main: title, sub: '' };
     }
