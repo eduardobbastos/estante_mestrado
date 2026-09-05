@@ -89,7 +89,7 @@ export class UIComponents {
                 audioLink: item['Link do AudioBook'] && item['Link do AudioBook'].startsWith('http') ? item['Link do AudioBook'] : ''
             })).filter(item => item.title !== 'Sem Título');
 
-            const mainTitle = lessonItems.length > 1 ? `Aula do dia ${date}` : lessonItems[0]?.title || 'Sem Título';
+            const mainTitle = lessonItems[0]?.title || 'Sem Título';
 
             const card = this.createCard({
                 type: 'lesson',
