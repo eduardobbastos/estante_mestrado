@@ -8,6 +8,7 @@ Portal de conteúdos acadêmicos do Programa de Pós-Graduação em Humanidades,
 
 - [Estudos de Cultura Brasileira](EstudosCulturaBrasileira/)
 - [Metodologia da Pesquisa](MetodologiaPesquisa/)
+- [Cibercultura, Educação e Linguagem](CiberculturaEducacaoLinguagem/)
 
 ## Estrutura
 
@@ -26,7 +27,9 @@ estante_mestrado/
 │               ├── DataService.js
 │               ├── UIComponents.js
 │               └── Utils.js
-└── MetodologiaPesquisa/
+├── MetodologiaPesquisa/
+│   └── ... (mesma estrutura)
+└── CiberculturaEducacaoLinguagem/
     └── ... (mesma estrutura)
 ```
 
