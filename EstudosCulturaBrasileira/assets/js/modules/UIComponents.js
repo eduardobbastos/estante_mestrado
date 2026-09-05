@@ -73,28 +73,29 @@ export class UIComponents {
         lessonsByDate.forEach(group => {
             const first = group[0];
             const date = first['Data aula'];
-            const title = group.map(item => item['Descrição Conteúdo']).filter(Boolean).join('<br><br>');
             const obs = group.map(item => item['Obsevação']).filter(Boolean).join(' / ');
-            const links = group.map(item => item['Link do Conteúdo']).filter(l => l && l.startsWith('http'));
-            const audioLinks = group.map(item => item['Link do AudioBook']).filter(l => l && l.startsWith('http'));
+            const lessonItems = group.map(item => ({
+                title: item['Descrição Conteúdo'] || 'Sem Título',
+                link: item['Link do Conteúdo'] && item['Link do Conteúdo'].startsWith('http') ? item['Link do Conteúdo'] : '',
+                audioLink: item['Link do AudioBook'] && item['Link do AudioBook'].startsWith('http') ? item['Link do AudioBook'] : ''
+            })).filter(item => item.title !== 'Sem Título');
+
+            const mainTitle = lessonItems.length > 1 ? `Aula do dia ${date}` : lessonItems[0]?.title || 'Sem Título';
 
             const card = this.createCard({
                 type: 'lesson',
                 tag: `Aula • ${date}`,
-                title,
+                title: mainTitle,
                 discipline: disc.Disciplina,
                 details: obs ? [{ label: 'Obs', value: obs }] : [],
-                link: links.length > 0 ? links[0] : '',
-                allLinks: links,
-                audioLink: audioLinks.length > 0 ? audioLinks[0] : '',
-                allAudioLinks: audioLinks,
                 icon: 'book-open',
                 showShare: true,
                 calendarEvent: date ? {
-                    title: `Aula: ${first['Descrição Conteúdo']}`,
-                    description: `Disciplina: ${disc.Disciplina}\nObservação: ${obs}`,
+                    title: `Aula: ${mainTitle}`,
+                    description: `Disciplina: ${disc.Disciplina}\nObservação: ${obs}\n\n${lessonItems.map((l, i) => `${i + 1}. ${l.title}`).join('\n')}`,
                     date
-                } : null
+                } : null,
+                lessonItems
             });
             lessonGrid.appendChild(card);
         });
@@ -145,10 +146,6 @@ export class UIComponents {
                 </div>
             `).join('');
 
-        const actionHtml = (config.link && config.link.startsWith('http')) 
-            ? `<div class="card-actions-links">${(config.allLinks || [config.link]).map((l, i) => `<a href="${l}" target="_blank" class="card-icon" title="Acessar Conteúdo ${i + 1}"><i data-lucide="external-link"></i></a>`).join('')}</div>`
-            : `<div class="card-icon"><i data-lucide="${config.icon}"></i></div>`;
-
         const calendarHtml = config.calendarEvent 
             ? `<button class="card-icon calendar-icon" title="Adicionar ao Calendário"><i data-lucide="calendar-plus"></i></button>`
             : '';
@@ -157,24 +154,45 @@ export class UIComponents {
             ? `<button class="card-icon share-icon" title="Compartilhar"><i data-lucide="share-2"></i></button>`
             : '';
 
-        const audioHtml = config.audioLink
-            ? `<div class="card-actions-links">${(config.allAudioLinks || [config.audioLink]).map((l, i) => `<a href="${l}" target="_blank" class="card-icon audio-icon" title="Ouvir AudioBook ${i + 1}"><i data-lucide="headphones"></i></a>`).join('')}</div>`
+        const hasMultipleLessons = config.lessonItems && config.lessonItems.length > 1;
+
+        const secondFloorHtml = hasMultipleLessons
+            ? `<div class="card-second-floor">
+                ${config.lessonItems.map((item, i) => `
+                    <div class="lesson-item">
+                        <div class="lesson-item-header">
+                            <span class="lesson-number">${i + 1}</span>
+                            <div class="lesson-actions">
+                                ${item.audioLink ? `<a href="${item.audioLink}" target="_blank" class="card-icon audio-icon" title="Ouvir AudioBook"><i data-lucide="headphones"></i></a>` : ''}
+                                ${item.link ? `<a href="${item.link}" target="_blank" class="card-icon" title="Acessar Conteúdo"><i data-lucide="external-link"></i></a>` : ''}
+                            </div>
+                        </div>
+                        <div class="lesson-item-title">${item.title}</div>
+                    </div>
+                `).join('')}
+               </div>`
             : '';
+
+        const mainActionHtml = !hasMultipleLessons && config.lessonItems?.[0]?.link
+            ? `<a href="${config.lessonItems[0].link}" target="_blank" class="card-icon" title="Acessar Conteúdo"><i data-lucide="external-link"></i></a>`
+            : (!hasMultipleLessons && config.lessonItems?.[0]?.audioLink
+                ? `<a href="${config.lessonItems[0].audioLink}" target="_blank" class="card-icon audio-icon" title="Ouvir AudioBook"><i data-lucide="headphones"></i></a>`
+                : `<div class="card-icon"><i data-lucide="${config.icon}"></i></div>`);
 
         card.innerHTML = `
             <div class="card-header">
                 <span class="card-tag">${config.tag}</span>
                 <div class="card-actions">
                     ${calendarHtml}
-                    ${audioHtml}
                     ${shareHtml}
-                    ${actionHtml}
+                    ${mainActionHtml}
                 </div>
             </div>
             <div class="card-title">${config.title}</div>
             <div class="card-details">
                 ${detailsHtml}
             </div>
+            ${secondFloorHtml}
             <button class="read-more-btn" style="display: none;">Ver mais</button>
         `;
 
