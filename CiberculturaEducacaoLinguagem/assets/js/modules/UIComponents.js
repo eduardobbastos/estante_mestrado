@@ -60,15 +60,24 @@ export class UIComponents {
 
         // Render Lessons — agrupa por data para juntar aulas multi-linha
         const lessonsByDate = new Map();
-        cronograma
-            .filter(c => c.Disciplina.toLowerCase().trim() === disc.Disciplina.toLowerCase().trim())
-            .forEach(item => {
-                const date = item['Data aula'] || 'Sem data';
-                if (!lessonsByDate.has(date)) {
-                    lessonsByDate.set(date, []);
-                }
-                lessonsByDate.get(date).push(item);
-            });
+        let lastDiscipline = '';
+        let lastDate = '';
+        cronograma.forEach(item => {
+            const itemDisc = (item.Disciplina || lastDiscipline).toLowerCase().trim();
+            if (item.Disciplina) {
+                lastDiscipline = item.Disciplina;
+            }
+            if (itemDisc !== disc.Disciplina.toLowerCase().trim()) return;
+
+            const date = item['Data aula'] || lastDate || 'Sem data';
+            if (item['Data aula']) {
+                lastDate = item['Data aula'];
+            }
+            if (!lessonsByDate.has(date)) {
+                lessonsByDate.set(date, []);
+            }
+            lessonsByDate.get(date).push(item);
+        });
 
         lessonsByDate.forEach(group => {
             const first = group[0];
