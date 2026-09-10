@@ -208,11 +208,15 @@ export class UIComponents {
             : '';
 
         const mainActionHtml = !hasSecondFloor
-            ? (config.lessonItems?.[0]?.link
+            ? (config.lessonItems?.[0]?.audioLink
+                ? `<a href="${config.lessonItems[0].audioLink}" target="_blank" class="card-icon audio-icon" title="Ouvir AudioBook"><i data-lucide="headphones"></i></a>`
+                : '')
+            + (config.lessonItems?.[0]?.link
                 ? `<a href="${config.lessonItems[0].link}" target="_blank" class="card-icon" title="Acessar Conteúdo"><i data-lucide="external-link"></i></a>`
-                : (config.lessonItems?.[0]?.audioLink
-                    ? `<a href="${config.lessonItems[0].audioLink}" target="_blank" class="card-icon audio-icon" title="Ouvir AudioBook"><i data-lucide="headphones"></i></a>`
-                    : `<div class="card-icon"><i data-lucide="${config.icon}"></i></div>`))
+                : '')
+            + (!config.lessonItems?.[0]?.audioLink && !config.lessonItems?.[0]?.link
+                ? `<div class="card-icon"><i data-lucide="${config.icon}"></i></div>`
+                : '')
             : '';
 
         const titleAreaHtml = !hasSecondFloor
