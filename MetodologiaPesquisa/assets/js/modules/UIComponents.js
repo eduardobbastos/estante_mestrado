@@ -196,12 +196,13 @@ export class UIComponents {
                         <div class="lesson-item-header">
                             <span class="lesson-number">${i + 1}</span>
                             <div class="lesson-actions">
-                                ${item.audioLink ? `<a href="${item.audioLink}" target="_blank" class="card-icon audio-icon" title="Ouvir AudioBook"><i data-lucide="headphones"></i></a>` : ''}
+                                ${item.audioLink ? `<button class="card-icon audio-icon" data-audio="${item.audioLink}" title="Ouvir AudioBook"><i data-lucide="headphones"></i></button>` : ''}
                                 ${item.link ? `<a href="${item.link}" target="_blank" class="card-icon" title="Acessar Conteúdo"><i data-lucide="external-link"></i></a>` : ''}
                             </div>
                         </div>
                         ${showItemTitle ? `<div class="lesson-item-title">${itemTitle.main}</div>` : ''}
                         ${itemTitle.sub ? `<div class="lesson-item-subtitle">${itemTitle.sub}</div>` : ''}
+                        ${item.audioLink ? `<div class="card-audio-player" data-audio-target="${item.audioLink}" style="display:none;"><audio controls preload="none" src="${item.audioLink}"></audio></div>` : ''}
                     </div>`;
                 }).join('')}
                </div>`
@@ -209,7 +210,7 @@ export class UIComponents {
 
         const mainActionHtml = !hasSecondFloor
             ? (config.lessonItems?.[0]?.audioLink
-                ? `<a href="${config.lessonItems[0].audioLink}" target="_blank" class="card-icon audio-icon" title="Ouvir AudioBook"><i data-lucide="headphones"></i></a>`
+                ? `<button class="card-icon audio-icon" data-audio="${config.lessonItems[0].audioLink}" title="Ouvir AudioBook"><i data-lucide="headphones"></i></button>`
                 : '')
             + (config.lessonItems?.[0]?.link
                 ? `<a href="${config.lessonItems[0].link}" target="_blank" class="card-icon" title="Acessar Conteúdo"><i data-lucide="external-link"></i></a>`
@@ -237,6 +238,7 @@ export class UIComponents {
             <div class="card-details">
                 ${detailsHtml}
             </div>
+            ${!hasSecondFloor && config.lessonItems?.[0]?.audioLink ? `<div class="card-audio-player" data-audio-target="${config.lessonItems[0].audioLink}" style="display:none;"><audio controls preload="none" src="${config.lessonItems[0].audioLink}"></audio></div>` : ''}
             ${secondFloorHtml}
             <button class="read-more-btn" style="display: none;">Ver mais</button>
         `;
@@ -270,5 +272,25 @@ export class UIComponents {
                 this.utils.share(config);
             });
         }
+
+        card.querySelectorAll('.audio-icon[data-audio]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const audioLink = btn.dataset.audio;
+                const player = card.querySelector(`.card-audio-player[data-audio-target="${audioLink}"]`);
+                if (!player) return;
+                const isHidden = player.style.display === 'none';
+                if (isHidden) {
+                    player.style.display = 'block';
+                } else {
+                    player.style.display = 'none';
+                    const audio = player.querySelector('audio');
+                    if (audio) {
+                        audio.pause();
+                        audio.currentTime = 0;
+                    }
+                }
+            });
+        });
     }
 }

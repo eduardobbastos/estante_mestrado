@@ -252,6 +252,7 @@ h3 {
 .lesson-item {
     background: rgba(13, 148, 136, 0.05);
     border-radius: 12px;
+    border: 1px solid rgba(13, 148, 136, 0.1);
     padding: 0.75rem;
 }
 
@@ -283,6 +284,23 @@ h3 {
 .lesson-actions .card-icon {
     width: 28px;
     height: 28px;
+}
+
+.card-actions .card-icon,
+.lesson-actions .card-icon {
+    border: none;
+    cursor: pointer;
+}
+
+.card-audio-player {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed rgba(13, 148, 136, 0.2);
+}
+
+.card-audio-player audio {
+    width: 100%;
+    min-width: 0;
 }
 
 .card-title {

@@ -286,6 +286,23 @@ h3 {
     height: 28px;
 }
 
+.card-actions .card-icon,
+.lesson-actions .card-icon {
+    border: none;
+    cursor: pointer;
+}
+
+.card-audio-player {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed rgba(13, 148, 136, 0.2);
+}
+
+.card-audio-player audio {
+    width: 100%;
+    min-width: 0;
+}
+
 .card-title {
     font-size: 1.15rem;
     font-weight: 600;
