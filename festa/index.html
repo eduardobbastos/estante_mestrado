@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⭐ Avalie a Festa! — Casa de Festa Alegre</title>
+<style>
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-12px)}}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700&display=swap');
+*{box-sizing:border-box; margin:0; padding:0}
+body{font-family:'Nunito',sans-serif;background:linear-gradient(135deg,#ffe066 0%,#ff9a56 50%,#ff6b81 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;color:#4a2c17}
+.card{background:#fff9f0;border-radius:32px;box-shadow:0 25px 60px rgba(255,160,90,0.35);padding:2.5rem 2rem;max-width:520px;width:92%;text-align:center;border:6px dashed #ffb347}
+.card h1{font-family:'Fredoka One',cursive;font-size:2.4rem;color:#ff6b6b;margin-bottom:0.25rem;text-shadow:3px 3px #ffd166}
+.subtitle{font-weight:700;color:#ff9a56;margin-bottom:1.75rem;font-size:1.05rem}
+.item{margin-bottom:1.4rem}
+.item label{font-weight:800;font-size:1.05rem;display:block;margin-bottom:0.35rem;color:#e07a5f}
+.stars{display:flex;justify-content:center;gap:0.35rem;font-size:2.2rem;cursor:pointer}
+.stars span{transition:transform .15s,color .15s;filter:drop-shadow(0 2px 1px #ffd166)}
+.stars span.selected{color:#ffdb3a;transform:scale(1.2)}
+.stars span:hover{color:#ffd166;transform:scale(1.35) rotate(-4deg)}
+.stars span{color:#e0c3a8}
+textarea,button{font-family:inherit;font-size:1rem;width:100%;border-radius:18px;border:3px solid #ffd166;padding:0.75rem 1rem;margin-top:0.35rem;background:#fffdf5}
+button{margin-top:1.2rem;background:linear-gradient(90deg,#ff6b6b,#ff9a56);color:#fff;border:none;font-weight:800;font-size:1.15rem;cursor:pointer;box-shadow:0 10px 25px rgba(255,107,129,0.3);transition:transform .1s,box-shadow .2s}
+button:hover{transform:translateY(-2px);box-shadow:0 14px 35px rgba(255,107,129,0.45)}
+.result{margin-top:1rem;font-weight:800;color:#ff6b6b;font-size:1.1rem;display:none}
+.footer{margin-top:1.5rem;font-size:0.85rem;color:#d48a6f;font-weight:700}
+</style>
+</head>
+<body>
+<div class="card">
+
+<section style="margin-bottom:1.5rem;text-align:center;">
+  <h2 style="font-family:'Fredoka One',cursive;font-size:1.8rem;color:#ff6b6b;text-shadow:2px 2px #ffd166;">🎈 A Criança do Código!</h2>
+  <p style="font-weight:700;color:#e07a5f;font-size:1.05rem;">Este app cresce com alegria — cada estrela é um abraço de festa!</p>
+  <div style="margin-top:0.8rem;">
+    <span style="display:inline-block;background:#ffd166;border-radius:50%;width:28px;height:28px;line-height:28px;color:#fff;font-weight:800;margin:0 4px;animation:bounce 1.2s infinite alternate;">★</span>
+    <span style="display:inline-block;background:#ff9a56;border-radius:50%;width:28px;height:28px;line-height:28px;color:#fff;font-weight:800;margin:0 4px;animation:bounce 1.2s infinite alternate 0.2s;">🎂</span>
+    <span style="display:inline-block;background:#ff6b6b;border-radius:50%;width:28px;height:28px;line-height:28px;color:#fff;font-weight:800;margin:0 4px;animation:bounce 1.2s infinite alternate 0.4s;">🎉</span>
+  </div>
+</section>
+
+  <h1>🎉 Avalie a Festa!</h1>
+  <p class="subtitle">Comida, ambiente, bolo e muita alegria — conta pra gente!</p>
+  <form id="formFesta" onsubmit="event.preventDefault(); avaliar();">
+    <div class="item">
+      <label>🍗 Comida</label>
+      <div class="stars" data-field="comida">
+        <span onclick="seleciona(this,'comida',1)">★</span><span onclick="seleciona(this,'comida',2)">★</span><span onclick="seleciona(this,'comida',3)">★</span><span onclick="seleciona(this,'comida',4)">★</span><span onclick="seleciona(this,'comida',5)">★</span>
+      </div>
+    </div>
+    <div class="item">
+      <label>🎈 Ambiente / Atendente</label>
+      <div class="stars" data-field="ambiente">
+        <span onclick="seleciona(this,'ambiente',1)">★</span><span onclick="seleciona(this,'ambiente',2)">★</span><span onclick="seleciona(this,'ambiente',3)">★</span><span onclick="seleciona(this,'ambiente',4)">★</span><span onclick="seleciona(this,'ambiente',5)">★</span>
+      </div>
+    </div>
+    <div class="item">
+      <label>🎊 Evento</label>
+      <div class="stars" data-field="evento">
+        <span onclick="seleciona(this,'evento',1)">★</span><span onclick="seleciona(this,'evento',2)">★</span><span onclick="seleciona(this,'evento',3)">★</span><span onclick="seleciona(this,'evento',4)">★</span><span onclick="seleciona(this,'evento',5)">★</span>
+      </div>
+    </div>
+    <div class="item">
+      <label>🍽️ Quantidade de Comida</label>
+      <div class="stars" data-field="quantidade">
+        <span onclick="seleciona(this,'quantidade',1)">★</span><span onclick="seleciona(this,'quantidade',2)">★</span><span onclick="seleciona(this,'quantidade',3)">★</span><span onclick="seleciona(this,'quantidade',4)">★</span><span onclick="seleciona(this,'quantidade',5)">★</span>
+      </div>
+    </div>
+    <div class="item">
+      <label>😋 Sabor</label>
+      <div class="stars" data-field="sabor">
+        <span onclick="seleciona(this,'sabor',1)">★</span><span onclick="seleciona(this,'sabor',2)">★</span><span onclick="seleciona(this,'sabor',3)">★</span><span onclick="seleciona(this,'sabor',4)">★</span><span onclick="seleciona(this,'sabor',5)">★</span>
+      </div>
+    </div>
+    <div class="item">
+      <label>🍰 Bolo / Docinho</label>
+      <div class="stars" data-field="bolo">
+        <span onclick="seleciona(this,'bolo',1)">★</span><span onclick="seleciona(this,'bolo',2)">★</span><span onclick="seleciona(this,'bolo',3)">★</span><span onclick="seleciona(this,'bolo',4)">★</span><span onclick="seleciona(this,'bolo',5)">★</span>
+      </div>
+    </div>
+    <div class="item">
+      <label>💬 Comentário alegre</label>
+      <textarea rows="3" id="comentario" placeholder="Conta o que mais te fez sorrir nessa festa! 🎈"></textarea>
+    </div>
+    <button type="submit">Enviar Avaliação 🌈</button>
+    <div class="result" id="resultado"></div>
+  </form>
+  <div class="footer">✨ Casa de Festa Alegre — GitPages</div>
+</div>
+<script>
+const notas={};
+function seleciona(el, campo, valor){
+  notas[campo]=valor; salvarLocalStorage();
+  const pai=el.parentElement;
+  [...pai.children].forEach((c,i)=>{
+    c.classList.toggle('selected', i<valor);
+  });
+}
+function avaliar(){
+  const campos=['comida','ambiente','evento','quantidade','sabor','bolo'];
+  const ok=campos.every(c=>notas[c]);
+  const res=document.getElementById('resultado');
+  if(!ok){ res.style.display='block'; salvarLocalStorage();
+  // confetti simples
+  for(let i=0;i<30;i++){
+    const c=document.createElement('div');
+    c.style.cssText='position:fixed;left:'+Math.random()*100+'vw;top:-10px;width:10px;height:10px;background:#ff6b6b;border-radius:50%;animation:fall 1.5s linear forwards;z-index:9999;';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),1600);
+  } res.textContent='⭐ Complete todas as estrelinhas para brilhar!'; return; }
+  const total=Object.values(notas).reduce((a,b)=>a+b,0);
+  const media=(total/6).toFixed(1);
+  res.style.display='block';
+  res.innerHTML=`🎉 Obrigado! Média: <strong>${media}</strong> estrelas (${total}/30) — Festa aprovada com alegria!`;
+  document.getElementById('comentario').value='';
+  campos.forEach(c=>{ notas[c]=null; document.querySelectorAll(`[data-field="${c}"] span`).forEach(s=>s.classList.remove('selected')); });
+}
+
+function salvarLocalStorage(){
+  const obj={notas:{...notas}, comentario:document.getElementById('comentario').value};
+  localStorage.setItem('festa-avaliacao', JSON.stringify(obj));
+}
+function carregarLocalStorage(){
+  const raw=localStorage.getItem('festa-avaliacao');
+  if(!raw) return;
+  try{ const obj=JSON.parse(raw); if(obj.notas) Object.assign(notas, obj.notas); if(obj.comentario) document.getElementById('comentario').value=obj.comentario; }
+  catch(e){}
+  ['comida','ambiente','evento','quantidade','sabor','bolo'].forEach(c=>{
+    if(notas[c]){
+      document.querySelectorAll('[data-field="'+c+'"] span').forEach((s,i)=>s.classList.toggle('selected', i<notas[c]));
+    }
+  });
+}
+window.addEventListener('DOMContentLoaded', carregarLocalStorage);
+</script>
+</body>
+</html>
