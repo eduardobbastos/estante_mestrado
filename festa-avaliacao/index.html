@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>⭐ Avalie a Festa! — Casa de Festa Alegre</title>
 <style>
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700&display=swap');
 *{box-sizing:border-box; margin:0; padding:0}
 body{font-family:'Nunito',sans-serif;background:linear-gradient(135deg,#ffe066 0%,#ff9a56 50%,#ff6b81 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;color:#4a2c17}
@@ -88,7 +89,14 @@ function avaliar(){
   const campos=['comida','ambiente','evento','quantidade','sabor','bolo'];
   const ok=campos.every(c=>notas[c]);
   const res=document.getElementById('resultado');
-  if(!ok){ res.style.display='block'; salvarLocalStorage(); res.textContent='⭐ Complete todas as estrelinhas para brilhar!'; return; }
+  if(!ok){ res.style.display='block'; salvarLocalStorage();
+  // confetti simples
+  for(let i=0;i<30;i++){
+    const c=document.createElement('div');
+    c.style.cssText='position:fixed;left:'+Math.random()*100+'vw;top:-10px;width:10px;height:10px;background:#ff6b6b;border-radius:50%;animation:fall 1.5s linear forwards;z-index:9999;';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),1600);
+  } res.textContent='⭐ Complete todas as estrelinhas para brilhar!'; return; }
   const total=Object.values(notas).reduce((a,b)=>a+b,0);
   const media=(total/6).toFixed(1);
   res.style.display='block';
