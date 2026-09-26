@@ -78,7 +78,7 @@ button:hover{transform:translateY(-2px);box-shadow:0 14px 35px rgba(255,107,129,
 <script>
 const notas={};
 function seleciona(el, campo, valor){
-  notas[campo]=valor;
+  notas[campo]=valor; salvarLocalStorage();
   const pai=el.parentElement;
   [...pai.children].forEach((c,i)=>{
     c.classList.toggle('selected', i<valor);
@@ -88,7 +88,7 @@ function avaliar(){
   const campos=['comida','ambiente','evento','quantidade','sabor','bolo'];
   const ok=campos.every(c=>notas[c]);
   const res=document.getElementById('resultado');
-  if(!ok){ res.style.display='block'; res.textContent='⭐ Complete todas as estrelinhas para brilhar!'; return; }
+  if(!ok){ res.style.display='block'; salvarLocalStorage(); res.textContent='⭐ Complete todas as estrelinhas para brilhar!'; return; }
   const total=Object.values(notas).reduce((a,b)=>a+b,0);
   const media=(total/6).toFixed(1);
   res.style.display='block';
@@ -96,6 +96,23 @@ function avaliar(){
   document.getElementById('comentario').value='';
   campos.forEach(c=>{ notas[c]=null; document.querySelectorAll(`[data-field="${c}"] span`).forEach(s=>s.classList.remove('selected')); });
 }
+
+function salvarLocalStorage(){
+  const obj={notas:{...notas}, comentario:document.getElementById('comentario').value};
+  localStorage.setItem('festa-avaliacao', JSON.stringify(obj));
+}
+function carregarLocalStorage(){
+  const raw=localStorage.getItem('festa-avaliacao');
+  if(!raw) return;
+  try{ const obj=JSON.parse(raw); if(obj.notas) Object.assign(notas, obj.notas); if(obj.comentario) document.getElementById('comentario').value=obj.comentario; }
+  catch(e){}
+  ['comida','ambiente','evento','quantidade','sabor','bolo'].forEach(c=>{
+    if(notas[c]){
+      document.querySelectorAll('[data-field="'+c+'"] span').forEach((s,i)=>s.classList.toggle('selected', i<notas[c]));
+    }
+  });
+}
+window.addEventListener('DOMContentLoaded', carregarLocalStorage);
 </script>
 </body>
 </html>
