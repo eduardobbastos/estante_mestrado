@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>⭐ Avalie a Festa! — Casa de Festa Alegre</title>
 <style>
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-12px)}}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700&display=swap');
 *{box-sizing:border-box; margin:0; padding:0}
@@ -28,6 +29,17 @@ button:hover{transform:translateY(-2px);box-shadow:0 14px 35px rgba(255,107,129,
 </head>
 <body>
 <div class="card">
+
+<section style="margin-bottom:1.5rem;text-align:center;">
+  <h2 style="font-family:'Fredoka One',cursive;font-size:1.8rem;color:#ff6b6b;text-shadow:2px 2px #ffd166;">🎈 A Criança do Código!</h2>
+  <p style="font-weight:700;color:#e07a5f;font-size:1.05rem;">Este app cresce com alegria — cada estrela é um abraço de festa!</p>
+  <div style="margin-top:0.8rem;">
+    <span style="display:inline-block;background:#ffd166;border-radius:50%;width:28px;height:28px;line-height:28px;color:#fff;font-weight:800;margin:0 4px;animation:bounce 1.2s infinite alternate;">★</span>
+    <span style="display:inline-block;background:#ff9a56;border-radius:50%;width:28px;height:28px;line-height:28px;color:#fff;font-weight:800;margin:0 4px;animation:bounce 1.2s infinite alternate 0.2s;">🎂</span>
+    <span style="display:inline-block;background:#ff6b6b;border-radius:50%;width:28px;height:28px;line-height:28px;color:#fff;font-weight:800;margin:0 4px;animation:bounce 1.2s infinite alternate 0.4s;">🎉</span>
+  </div>
+</section>
+
   <h1>🎉 Avalie a Festa!</h1>
   <p class="subtitle">Comida, ambiente, bolo e muita alegria — conta pra gente!</p>
   <form id="formFesta" onsubmit="event.preventDefault(); avaliar();">
