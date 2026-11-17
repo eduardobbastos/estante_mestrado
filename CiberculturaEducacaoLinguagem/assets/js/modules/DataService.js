@@ -39,8 +39,31 @@ export class DataService {
         }
     }
 
+    _splitRecords(csvText) {
+        // Divide o CSV em registros respeitando quebras de linha dentro de aspas
+        // (células com \n — ex. descrição de leitura em várias linhas).
+        const records = [];
+        let cur = '';
+        let inQuotes = false;
+        for (let i = 0; i < csvText.length; i++) {
+            const ch = csvText[i];
+            if (ch === '"') {
+                if (inQuotes && csvText[i + 1] === '"') { cur += '"'; i++; }
+                else { inQuotes = !inQuotes; cur += ch; }
+            } else if ((ch === '\n' || ch === '\r') && !inQuotes) {
+                if (ch === '\r' && csvText[i + 1] === '\n') i++;
+                records.push(cur);
+                cur = '';
+            } else {
+                cur += ch;
+            }
+        }
+        if (cur.trim() !== '') records.push(cur);
+        return records.filter(r => r.trim() !== '');
+    }
+
     _parseCSV(csvText) {
-        const lines = csvText.split('\n');
+        const lines = this._splitRecords(csvText);
         if (lines.length < 1) return [];
         
         const headers = this._parseLine(lines[0]);
