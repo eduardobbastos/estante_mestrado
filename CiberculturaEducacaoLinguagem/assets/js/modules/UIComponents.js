@@ -69,7 +69,8 @@ export class UIComponents {
             }
             if (itemDisc !== disc.Disciplina.toLowerCase().trim()) return;
 
-            const date = item['Data aula'] || lastDate || 'Sem data';
+            const isExtraItem = /^leitura\s+extra\b/i.test(String(item['Descrição Conteúdo'] || '').trim());
+            const date = isExtraItem ? 'Leitura Extra' : (item['Data aula'] || lastDate || 'Sem data');
             if (item['Data aula']) {
                 lastDate = item['Data aula'];
             }
@@ -79,9 +80,7 @@ export class UIComponents {
             lessonsByDate.get(date).push(item);
         });
 
-        lessonsByDate.forEach(group => {
-            const first = group[0];
-            const date = first['Data aula'];
+        lessonsByDate.forEach((group, date) => {
             const isExtra = /^leitura\s+extra$/i.test(String(date || '').trim());
             const obs = group.map(item => item['Obsevação']).filter(Boolean).join(' / ');
             const lessonItems = group.map(item => ({
