@@ -82,6 +82,7 @@ export class UIComponents {
         lessonsByDate.forEach(group => {
             const first = group[0];
             const date = first['Data aula'];
+            const isExtra = /^leitura\s+extra$/i.test(String(date || '').trim());
             const obs = group.map(item => item['Obsevação']).filter(Boolean).join(' / ');
             const lessonItems = group.map(item => ({
                 title: item['Descrição Conteúdo'] || 'Sem Título',
@@ -92,14 +93,14 @@ export class UIComponents {
             const mainTitle = lessonItems[0]?.title || `Aula do dia ${date}`;
 
             const card = this.createCard({
-                type: 'lesson',
-                tag: `Aula • ${date}`,
+                type: isExtra ? 'extra' : 'lesson',
+                tag: isExtra ? 'Leitura Extra' : `Aula • ${date}`,
                 title: mainTitle,
                 discipline: disc.Disciplina,
                 details: obs ? [{ label: 'Obs', value: obs }] : [],
-                icon: 'book-open',
+                icon: isExtra ? 'book-marked' : 'book-open',
                 showShare: true,
-                calendarEvent: date ? {
+                calendarEvent: !isExtra && date ? {
                     title: `Aula: ${mainTitle}`,
                     description: `Disciplina: ${disc.Disciplina}\nObservação: ${obs}\n\n${lessonItems.map((l, i) => `${i + 1}. ${l.title}`).join('\n')}`,
                     date
